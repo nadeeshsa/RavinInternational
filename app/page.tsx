@@ -1,69 +1,95 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, CarFront, Gavel, HardHat, Video } from "lucide-react";
+import { FeaturedInventorySection } from "@/components/inventory/FeaturedInventorySection";
+import { mockInventory } from "@/data/mock-inventory";
+import { companyInfo } from "@/lib/company-info";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
+        <p className="mb-4 inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-xs font-semibold tracking-[0.18em] text-blue-700">
+          JAPAN TO GLOBAL MARKETS
+        </p>
+        <h1 className="font-industrial max-w-3xl text-4xl leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          Trusted Export Partner For Vehicles, Machinery, And Parts
+        </h1>
+        <p className="mt-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
+          {companyInfo.shortDisplayName} connects buyers worldwide with
+          high-quality Japanese stock, auction opportunities, and industrial
+          equipment sourcing.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link
+            href="/inventory"
+            className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+          >
+            Explore Inventory
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+          >
+            Contact Our Team
+          </Link>
+        </div>
+      </div>
+
+      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <FeatureCard
+          href="/inventory"
+          icon={CarFront}
+          title="Stock Inventory"
+          description="Cars, trucks, and commercial fleets ready for export."
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        <FeatureCard
+          href="/yahoo-auctions"
+          icon={Gavel}
+          title="Yahoo Auctions"
+          description="Real-time support for bidding and procurement from Japan."
+        />
+        <FeatureCard
+          href="/media"
+          icon={Video}
+          title="YouTube Videos"
+          description="Walkarounds, inspections, and shipment highlights."
+        />
+        <FeatureCard
+          href="/contact"
+          icon={HardHat}
+          title="Heavy Machinery"
+          description="Reliable sourcing of industrial and construction units."
+        />
+      </div>
+
+      <FeaturedInventorySection items={mockInventory} />
+    </section>
+  );
+}
+
+type FeatureCardProps = {
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+};
+
+function FeatureCard({ href, icon: Icon, title, description }: FeatureCardProps) {
+  return (
+    <Link
+      href={href}
+      className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-md"
+    >
+      <Icon className="h-6 w-6 text-blue-600" />
+      <h2 className="mt-4 font-industrial text-xl text-slate-900">{title}</h2>
+      <p className="mt-2 text-sm leading-7 text-slate-600">
+        {description}
+      </p>
+      <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 transition group-hover:text-blue-800">
+        Learn more
+        <ArrowRight className="h-4 w-4" />
+      </span>
+    </Link>
   );
 }

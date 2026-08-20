@@ -1,7 +1,34 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.pexels.com",
+      },
+      {
+        protocol: "https",
+        hostname: "auctions.c.yimg.jp",
+      },
+      {
+        protocol: "https",
+        hostname: "auc-pctr.c.yimg.jp",
+      },
+      {
+        protocol: "https",
+        hostname: "s.yimg.jp",
+      },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+      },
+      {
+        protocol: "https",
+        hostname: "yt3.ggpht.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

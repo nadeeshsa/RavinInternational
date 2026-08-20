@@ -1,26 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Systena-inspired palette */
+  --color-site-bg: #ffffff;
+  --color-site-bg-soft: #f6f9fc;
+  --color-site-panel: #ffffff;
+  --color-site-panel-muted: #f7fbfe;
+  --color-site-line: #e6eef8;
+  --color-site-text: #09263b; /* deep navy */
+  --color-site-subtext: #5b6b7a;
+  --color-site-accent: #0071c8; /* primary blue */
+  --color-site-accent-strong: #005a9c;
+  --color-site-accent-alt: #ff6a00; /* orange accent for search and CTA */
+  --color-site-navy: #052c48;
+  --color-site-crimson: #b91c1c;
+  --color-site-amber: #d97706;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: var(--color-site-bg);
+  --color-foreground: var(--color-site-text);
+  --font-sans: var(--font-jakarta);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(180deg, var(--color-site-bg) 0%, var(--color-site-bg-soft) 100%);
+  color: var(--color-site-text);
+  font-family: var(--font-bilingual), var(--font-jakarta), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+h1,
+h2,
+h3,
+.font-industrial {
+  font-family: var(--font-jakarta), var(--font-bilingual), sans-serif;
+  letter-spacing: -0.015em;
 }
