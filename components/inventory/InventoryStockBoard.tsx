@@ -97,7 +97,7 @@ export function InventoryStockBoard({ items }: InventoryStockBoardProps) {
           <p className="inline-flex items-center gap-2 text-sm text-slate-600">
             <SlidersHorizontal className="h-4 w-4 text-blue-600" />
             Showing <span className="font-semibold">{filteredItems.length}</span> of{" "}
-            {items.length} listings
+            {items.length} verified listings
           </p>
           <CurrencyToggle
             currency={currency}

@@ -1,40 +1,56 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Mail, MapPinned, MessageCircle, PhoneCall } from "lucide-react";
 import { InquiryForm } from "@/components/contact/InquiryForm";
 import { companyInfo } from "@/lib/company-info";
 
+export const metadata: Metadata = {
+  title: "Contact Us | ラビンインターナショナル株式会社",
+  description:
+    "Contact ラビンインターナショナル株式会社 for stock inquiries, auction support, and export coordination. Reach us by form, phone, email, or WhatsApp.",
+};
+
 export default function ContactPage() {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-      <div className="rounded-3xl border border-[var(--color-site-line)] bg-[linear-gradient(140deg,rgba(9,44,75,0.94)_0%,rgba(6,28,49,0.98)_100%)] p-8 sm:p-10">
-        <p className="text-xs font-semibold tracking-[0.18em] text-cyan-200">
-          CONTACT & INQUIRY DESK
-        </p>
-        <h1 className="font-industrial mt-3 text-4xl text-white sm:text-5xl">
-          Request Quote Or Shipping Consultation
-        </h1>
-        <p className="mt-4 max-w-3xl text-sm leading-8 text-[var(--color-site-subtext)] sm:text-base">
-          Submit your inquiry for vehicles, machinery, equipment, or parts. Our
-          export team will respond with availability, destination port estimate,
-          and payment process details.
-        </p>
+      <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
+        <div
+          className="pointer-events-none absolute -top-20 right-0 h-72 w-72 rounded-full opacity-20"
+          style={{ background: "radial-gradient(circle at center, var(--color-site-accent), transparent 66%)" }}
+        />
+        <div className="relative">
+          <p className="mb-4 inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-xs font-semibold tracking-[0.18em] text-blue-700">
+            CONTACT & INQUIRY DESK
+          </p>
+          <h1 className="font-industrial text-4xl text-slate-900 sm:text-5xl">
+            Request Quote Or Shipping Consultation
+          </h1>
+          <p className="mt-4 max-w-3xl text-sm leading-8 text-slate-600 sm:text-base">
+            Submit your inquiry for vehicles, machinery, equipment, or parts. Our
+            export team will respond with availability, destination port estimate,
+            and payment process details.
+          </p>
+        </div>
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <div className="rounded-3xl border border-[var(--color-site-line)] bg-[#072945]/85 p-6 sm:p-8">
-          <h2 className="font-industrial text-3xl text-white">Send Inquiry</h2>
-          <p className="mt-2 text-sm text-[var(--color-site-subtext)]">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <h2 className="font-industrial text-3xl text-slate-900">Send Inquiry</h2>
+          <p className="mt-2 text-sm text-slate-600">
             Fill in your details and destination information. We usually reply
             within one business day.
           </p>
           <div className="mt-6">
-            <InquiryForm submitLabel="Submit Contact Request" />
+            <InquiryForm
+              submitLabel="Submit Contact Request"
+              redirectToWhatsApp
+            />
           </div>
         </div>
 
         <div className="space-y-6">
-          <div className="rounded-3xl border border-[var(--color-site-line)] bg-[#072945]/85 p-6">
-            <h2 className="font-industrial text-2xl text-white">Direct Contact</h2>
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 className="font-industrial text-2xl text-slate-900">Direct Contact</h2>
 
             <div className="mt-4 space-y-3 text-sm">
               <ContactCard
@@ -62,14 +78,14 @@ export default function ContactPage() {
                 href={companyInfo.whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-200/35 bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-400"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-400"
               >
                 <MessageCircle className="h-4 w-4" />
                 WhatsApp
               </Link>
               <Link
                 href={companyInfo.emailLink}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-300 px-4 py-2.5 text-sm font-semibold text-[#052643] transition hover:bg-cyan-200"
+                className="btn-primary justify-center"
               >
                 <Mail className="h-4 w-4" />
                 Email Us
@@ -77,20 +93,20 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-[var(--color-site-line)] bg-[#072945]/85 p-6">
-            <h2 className="font-industrial flex items-center gap-2 text-2xl text-white">
-              <MapPinned className="h-6 w-6 text-cyan-300" />
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 className="font-industrial flex items-center gap-2 text-2xl text-slate-900">
+              <MapPinned className="h-6 w-6 text-blue-600" />
               Kanagawa Office
             </h2>
-            <p className="mt-3 text-sm leading-7 text-[var(--color-site-subtext)]">
-              {companyInfo.addressEnglish}
-              <br />
+            <p className="mt-3 text-sm leading-7 text-slate-600">
               {companyInfo.addressJapanese}
+              <br />
+              {companyInfo.addressEnglish}
             </p>
 
-            <div className="mt-4 overflow-hidden rounded-2xl border border-cyan-300/20">
+            <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200">
               <iframe
-                title="Ravin International Office Map"
+                title="ラビンインターナショナル株式会社 Office Map"
                 src={companyInfo.googleMapsEmbedUrl}
                 width="100%"
                 height="300"
@@ -118,9 +134,9 @@ function ContactCard({ icon: Icon, label, value, href }: ContactCardProps) {
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 rounded-xl border border-cyan-300/20 bg-[#062743] px-4 py-3 text-cyan-100 transition hover:border-cyan-300/45"
+      className="flex items-center gap-3 rounded-xl border border-slate-200 bg-[var(--color-site-bg-soft)] px-4 py-3 text-slate-700 transition hover:border-blue-200 hover:bg-blue-50"
     >
-      <Icon className="h-4 w-4 text-cyan-300" />
+      <Icon className="h-4 w-4 text-blue-600" />
       <div>
         <p className="text-xs tracking-[0.12em] text-[var(--color-site-accent)]">{label}</p>
         <p className="text-sm font-semibold text-[var(--color-site-text)]">{value}</p>

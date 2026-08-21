@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# unused duplicate of public/photos/ (app reads from public/photos/ only)
+/photos/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/usr/bin/tail -15 /tmp/nextdev.log)",
+      "Bash(/usr/bin/tail -20 /tmp/nextdev.log)",
+      "Skill(fewer-permission-prompts)",
+      "Skill(fewer-permission-prompts:*)",
+      "Bash(ls -t ~/.claude/projects/ 2>/dev/null | head -20)",
+      "Read(//Users/nadeeshasubasinghe/.claude/projects/**)",
+      "Bash(python3 -)",
+      "Bash(/usr/bin/curl -s -o /dev/null -w \"inventory:%{http_code}\\\\n\" http://localhost:3000/inventory)",
+      "Bash(/usr/bin/tail -10 /tmp/nextdev.log)",
+      "Bash(/usr/bin/curl -s http://localhost:3000/media)",
+      "Bash(git check-ignore *)",
+      "Bash(git add *)"
+    ]
+  }
+}

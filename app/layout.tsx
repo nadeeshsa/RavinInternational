@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   title: `${companyInfo.companyNameEnglish} | Exports`,
   description:
     `${companyInfo.businessScopeEnglish} (${companyInfo.businessScopeJapanese}).`,
+  icons: {
+    icon: "/logo/logo.jpeg",
+    shortcut: "/logo/logo.jpeg",
+    apple: "/logo/logo.jpeg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

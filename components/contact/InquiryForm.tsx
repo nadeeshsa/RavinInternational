@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { companyInfo } from "@/lib/company-info";
 
 type StockContext = {
   stockId: string;
@@ -13,6 +14,7 @@ type InquiryFormProps = {
   stockContext?: StockContext;
   submitLabel?: string;
   onSuccess?: () => void;
+  redirectToWhatsApp?: boolean;
 };
 
 type InquiryPayload = {
@@ -35,6 +37,7 @@ export function InquiryForm({
   stockContext,
   submitLabel = "Send Inquiry",
   onSuccess,
+  redirectToWhatsApp = false,
 }: InquiryFormProps) {
   const [customerName, setCustomerName] = useState("");
   const [email, setEmail] = useState("");
@@ -90,6 +93,38 @@ export function InquiryForm({
       fobPriceJPY: stockContext?.fobPriceJPY,
     };
 
+    if (redirectToWhatsApp) {
+      const whatsappLines = [
+        "Hello ラビンインターナショナル株式会社, I would like to submit a contact request.",
+        "",
+        `Customer Name: ${payload.customerName}`,
+        `Email: ${payload.email}`,
+        `Country: ${payload.country}`,
+        `Target Destination Port: ${payload.destinationPort}`,
+        `Phone Number: ${payload.phoneNumber}`,
+        `Message: ${payload.message}`,
+      ];
+
+      if (payload.stockId || payload.vehicleName) {
+        whatsappLines.push(
+          "",
+          `Stock ID: ${payload.stockId || "N/A"}`,
+          `Vehicle Name: ${payload.vehicleName || "N/A"}`,
+          `FOB Price (USD): ${readonlyPriceUSD || "N/A"}`,
+          `FOB Price (JPY): ${readonlyPriceJPY || "N/A"}`,
+        );
+      }
+
+      const separator = companyInfo.whatsappLink.includes("?") ? "&" : "?";
+      const whatsappUrl =
+        `${companyInfo.whatsappLink}${separator}text=` +
+        encodeURIComponent(whatsappLines.join("\n"));
+
+      onSuccess?.();
+      window.open(whatsappUrl, "_self");
+      return;
+    }
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -143,8 +178,8 @@ export function InquiryForm({
           <input type="hidden" name="fobPriceUSD" value={stockContext.fobPriceUSD} />
           <input type="hidden" name="fobPriceJPY" value={stockContext.fobPriceJPY} />
 
-          <div className="rounded-2xl border border-cyan-300/30 bg-[#062743] p-4">
-            <p className="text-xs font-semibold tracking-[0.13em] text-cyan-200">
+          <div className="rounded-2xl border border-slate-200 bg-[var(--color-site-bg-soft)] p-4">
+            <p className="text-xs font-semibold tracking-[0.13em] text-blue-700">
               STOCK QUOTE CONTEXT
             </p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
@@ -192,7 +227,7 @@ export function InquiryForm({
       </div>
 
       <label className="block">
-        <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-cyan-200">
+        <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
           Message
         </span>
         <textarea
@@ -200,7 +235,7 @@ export function InquiryForm({
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           rows={5}
-          className="w-full rounded-xl border border-cyan-300/25 bg-[#041f36] px-4 py-3 text-sm text-white outline-none placeholder:text-cyan-200/50 focus:border-cyan-300/55"
+          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-400"
         />
       </label>
 
@@ -208,8 +243,8 @@ export function InquiryForm({
         <p
           className={`rounded-xl border px-4 py-3 text-sm ${
             submitState.kind === "success"
-              ? "border-emerald-300/45 bg-emerald-300/10 text-emerald-100"
-              : "border-rose-300/45 bg-rose-300/10 text-rose-100"
+              ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+              : "border-rose-200 bg-rose-50 text-rose-800"
           }`}
         >
           {submitState.message}
@@ -219,7 +254,7 @@ export function InquiryForm({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="inline-flex w-full items-center justify-center rounded-xl bg-cyan-300 px-5 py-3 text-sm font-semibold text-[#06253f] transition hover:bg-cyan-200 disabled:cursor-not-allowed disabled:opacity-70"
+        className="btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isSubmitting ? "Sending..." : submitLabel}
       </button>
@@ -244,7 +279,7 @@ function TextField({
 }: TextFieldProps) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-cyan-200">
+      <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
         {label}
       </span>
       <input
@@ -253,7 +288,7 @@ function TextField({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-cyan-300/25 bg-[#041f36] px-4 py-3 text-sm text-white outline-none placeholder:text-cyan-200/50 focus:border-cyan-300/55"
+        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-400"
       />
     </label>
   );
@@ -267,13 +302,13 @@ type ReadonlyFieldProps = {
 function ReadonlyField({ label, value }: ReadonlyFieldProps) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-cyan-200">
+      <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
         {label}
       </span>
       <input
         readOnly
         value={value}
-        className="w-full rounded-xl border border-cyan-300/25 bg-[#041f36] px-4 py-3 text-sm text-cyan-50"
+        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700"
       />
     </label>
   );

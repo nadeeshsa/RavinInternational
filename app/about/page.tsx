@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   BadgeCheck,
@@ -10,57 +11,69 @@ import {
 } from "lucide-react";
 import { companyInfo } from "@/lib/company-info";
 
+export const metadata: Metadata = {
+  title: "About And Legal Information | ラビンインターナショナル株式会社",
+  description:
+    "View company credentials, dealer license details, and office information for ラビンインターナショナル株式会社.",
+};
+
 export default function AboutPage() {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
       <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
-        <div className="rounded-3xl border border-[var(--color-site-line)] bg-[linear-gradient(135deg,rgba(15,63,105,0.9)_0%,rgba(6,33,57,0.95)_100%)] p-8 shadow-2xl shadow-cyan-900/20 sm:p-10">
-          <p className="inline-flex items-center gap-2 rounded-full border border-cyan-200/25 bg-cyan-300/10 px-4 py-1 text-xs font-semibold tracking-[0.18em] text-cyan-200">
-            <ShieldCheck className="h-3.5 w-3.5" />
-            ABOUT US / LEGAL INFO
-          </p>
-          <h1 className="font-industrial mt-5 text-4xl text-white sm:text-5xl">
-            Licensed, Transparent, Export-Ready
-          </h1>
-          <p className="mt-5 max-w-3xl text-base leading-8 text-[var(--color-site-subtext)] sm:text-lg">
-            {companyInfo.companyNameCombined} operates with verified legal
-            credentials and direct communication channels for global buyers.
-          </p>
+        <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
+          <div
+            className="pointer-events-none absolute -top-20 right-0 h-72 w-72 rounded-full opacity-20"
+            style={{ background: "radial-gradient(circle at center, var(--color-site-accent), transparent 66%)" }}
+          />
+          <div className="relative">
+            <p className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-xs font-semibold tracking-[0.18em] text-blue-700">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              ABOUT OUR COMPANY
+            </p>
+            <h1 className="font-industrial mt-5 text-4xl text-slate-900 sm:text-5xl">
+              Proven Integrity in Japanese Vehicle &amp; Machinery Export
+            </h1>
+            <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
+              Operating directly from Kanagawa, Japan, {companyInfo.shortDisplayName} is
+              a licensed Japanese dealer providing reliable global export services.
+            </p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            <ContactCta
-              href={companyInfo.mobileCallLink}
-              label="Call Mobile"
-              value={companyInfo.mobile}
-              icon={PhoneCall}
-            />
-            <ContactCta
-              href={companyInfo.emailLink}
-              label="Email"
-              value={companyInfo.email}
-              icon={Mail}
-            />
-            <ContactCta
-              href={companyInfo.whatsappLink}
-              label="WhatsApp"
-              value="Direct chat"
-              icon={MessageCircle}
-              external
-            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              <ContactCta
+                href={companyInfo.mobileCallLink}
+                label="Call Mobile"
+                value={companyInfo.mobile}
+                icon={PhoneCall}
+              />
+              <ContactCta
+                href={companyInfo.emailLink}
+                label="Email"
+                value={companyInfo.email}
+                icon={Mail}
+              />
+              <ContactCta
+                href={companyInfo.whatsappLink}
+                label="WhatsApp"
+                value="Direct chat"
+                icon={MessageCircle}
+                external
+              />
+            </div>
           </div>
         </div>
 
-        <aside className="rounded-3xl border border-cyan-200/35 bg-[#0b3558] p-7 shadow-xl shadow-cyan-950/30">
-          <p className="inline-flex items-center gap-2 rounded-full border border-cyan-300/40 bg-cyan-300/10 px-3 py-1 text-xs font-semibold tracking-[0.15em] text-cyan-200">
+        <aside className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
+          <p className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold tracking-[0.15em] text-blue-700">
             <BadgeCheck className="h-3.5 w-3.5" />
             COMPLIANCE VERIFIED
           </p>
-          <h2 className="font-industrial mt-4 text-2xl text-white">Official License</h2>
-          <p className="mt-4 text-sm text-cyan-100">Secondhand Dealer License No.</p>
-          <p className="font-industrial mt-1 break-all text-3xl text-cyan-200">
+          <h2 className="font-industrial mt-4 text-2xl text-slate-900">Official License</h2>
+          <p className="mt-4 text-sm text-slate-600">Secondhand Dealer License No.</p>
+          <p className="font-industrial mt-1 break-all text-3xl text-[var(--color-site-accent-strong)]">
             452740019730
           </p>
-          <p className="mt-4 rounded-xl border border-cyan-200/20 bg-[#072642] p-4 text-sm leading-7 text-[var(--color-site-subtext)]">
+          <p className="mt-4 rounded-xl border border-slate-200 bg-[var(--color-site-bg-soft)] p-4 text-sm leading-7 text-slate-600">
             {companyInfo.dealerLicenseEnglish}
             <br />
             {companyInfo.dealerLicenseJapanese}
@@ -69,9 +82,9 @@ export default function AboutPage() {
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-        <div className="rounded-3xl border border-[var(--color-site-line)] bg-[var(--color-site-panel)]/70 p-7 sm:p-8">
-          <h2 className="font-industrial flex items-center gap-2 text-3xl text-white">
-            <Building2 className="h-7 w-7 text-cyan-300" />
+        <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm sm:p-8">
+          <h2 className="font-industrial flex items-center gap-2 text-3xl text-slate-900">
+            <Building2 className="h-7 w-7 text-blue-600" />
             Company Credentials
           </h2>
 
@@ -96,19 +109,19 @@ export default function AboutPage() {
           </dl>
         </div>
 
-        <div className="rounded-3xl border border-[var(--color-site-line)] bg-[#072945] p-5 sm:p-6">
-          <h2 className="font-industrial flex items-center gap-2 text-2xl text-white">
-            <MapPinned className="h-6 w-6 text-cyan-300" />
+        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="font-industrial flex items-center gap-2 text-2xl text-slate-900">
+            <MapPinned className="h-6 w-6 text-blue-600" />
             Kanagawa Office
           </h2>
-          <p className="mt-3 text-sm leading-7 text-[var(--color-site-subtext)]">
-            959 Sanmasu, Aikawa-machi, Aiko-gun, Kanagawa 243-0308, Japan
+          <p className="mt-3 text-sm leading-7 text-slate-600">
+            {companyInfo.addressJapanese}
             <br />
-            〒243-0308 神奈川県愛甲郡愛川町三増 959
+            {companyInfo.addressEnglish}
           </p>
-          <div className="mt-4 overflow-hidden rounded-2xl border border-cyan-200/20">
+          <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200">
             <iframe
-              title="Ravin International Kanagawa Location"
+              title="ラビンインターナショナル株式会社 Kanagawa Location"
               src={companyInfo.googleMapsEmbedUrl}
               width="100%"
               height="320"
@@ -136,11 +149,11 @@ function ContactCta({ href, label, value, icon: Icon, external }: ContactCtaProp
   return (
     <Link
       href={href}
-      className="group rounded-2xl border border-cyan-200/25 bg-[#062743] px-4 py-4 transition hover:-translate-y-1 hover:border-cyan-300/60 hover:bg-[#0b3458]"
+      className="group rounded-2xl border border-slate-200 bg-[var(--color-site-bg-soft)] px-4 py-4 transition hover:-translate-y-1 hover:border-blue-200 hover:bg-blue-50"
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
     >
-      <Icon className="h-5 w-5 text-cyan-300" />
+      <Icon className="h-5 w-5 text-blue-600" />
       <p className="mt-3 text-xs tracking-[0.15em] text-[var(--color-site-accent)]">{label}</p>
       <p className="mt-1 text-sm font-semibold text-[var(--color-site-text)]">{value}</p>
     </Link>

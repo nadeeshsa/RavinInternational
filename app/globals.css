@@ -15,6 +15,19 @@
   --color-site-navy: #052c48;
   --color-site-crimson: #b91c1c;
   --color-site-amber: #d97706;
+  /* Design tokens */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --btn-padding-y: 0.6rem;
+  --btn-padding-x: 1.25rem;
+  --btn-font-size: 0.95rem;
+  --btn-primary-bg: var(--color-site-accent);
+  --btn-primary-bg-hover: var(--color-site-accent-strong);
+  --btn-primary-text: #ffffff;
+  --btn-secondary-bg: var(--color-site-panel);
+  --btn-secondary-border: var(--color-site-line);
+  --btn-secondary-text: var(--color-site-text);
 }
 
 @theme inline {
@@ -36,3 +49,33 @@ h3,
   font-family: var(--font-jakarta), var(--font-bilingual), sans-serif;
   letter-spacing: -0.015em;
 }
+
+/* Lightweight component classes to unify CTAs */
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:var(--btn-padding-y) var(--btn-padding-x);
+  font-weight:600;
+  font-size:var(--btn-font-size);
+  color:var(--btn-primary-text);
+  background:var(--btn-primary-bg);
+  border-radius:var(--radius-lg);
+  transition:background .15s ease, transform .08s ease;
+}
+.btn-primary:hover{background:var(--btn-primary-bg-hover);transform:translateY(-1px)}
+
+.btn-secondary{
+  display:inline-flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:var(--btn-padding-y) var(--btn-padding-x);
+  font-weight:600;
+  font-size:var(--btn-font-size);
+  color:var(--btn-secondary-text);
+  background:var(--btn-secondary-bg);
+  border:1px solid var(--btn-secondary-border);
+  border-radius:var(--radius-lg);
+  transition:background .12s ease, border-color .12s ease;
+}
+.btn-secondary:hover{background:var(--color-site-bg-soft);border-color:var(--color-site-accent)}

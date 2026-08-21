@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { CalendarClock, CircleAlert, Gavel, PackageSearch, Scale } from "lucide-react";
 import { getYahooSellerFeed } from "@/lib/external-feeds";
 
 export const revalidate = 1800;
+
+export const metadata: Metadata = {
+  title: "Yahoo Auctions Feed | ラビンインターナショナル株式会社",
+  description:
+    "Live Yahoo! Japan Auctions seller listings with pricing, condition, and link-out details for sourcing support.",
+};
 
 function formatJPY(value: number): string {
   return new Intl.NumberFormat("ja-JP", {
@@ -40,35 +47,42 @@ export default async function YahooAuctionsPage() {
 
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-      <div className="rounded-3xl border border-[var(--color-site-line)] bg-[linear-gradient(135deg,rgba(12,53,90,0.9)_0%,rgba(6,33,57,0.95)_100%)] p-8 sm:p-10">
-        <p className="text-xs font-semibold tracking-[0.17em] text-cyan-200">
-          LIVE EXTERNAL FEED
-        </p>
-        <h1 className="font-industrial mt-3 text-4xl text-white sm:text-5xl">
-          Yahoo! Japan Auctions Seller Stream
-        </h1>
-        <p className="mt-4 max-w-3xl text-sm leading-8 text-[var(--color-site-subtext)] sm:text-base">
-          Active listings are fetched from your configured Yahoo seller account and
-          refreshed periodically.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link
-            href={feed.sellerUrl || "https://auctions.yahoo.co.jp/"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-2.5 text-sm font-semibold text-[#06253f] transition hover:bg-cyan-200"
-          >
-            <Gavel className="h-4 w-4" />
-            Open Seller Page
-          </Link>
-          <p className="inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-xs font-semibold tracking-[0.1em] text-cyan-100">
-            SELLER ID: {feed.sellerId || "Not configured"}
+      <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
+        <div
+          className="pointer-events-none absolute -top-20 right-0 h-72 w-72 rounded-full opacity-20"
+          style={{ background: "radial-gradient(circle at center, var(--color-site-accent), transparent 66%)" }}
+        />
+        <div className="relative">
+          <p className="mb-4 inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-xs font-semibold tracking-[0.17em] text-blue-700">
+            DIRECT JAPANESE AUCTION ACCESS
           </p>
+          <h1 className="font-industrial text-4xl text-slate-900 sm:text-5xl">
+            Transparent Bidding &amp; Procurement from Japanese Auctions
+          </h1>
+          <p className="mt-4 max-w-3xl text-sm leading-8 text-slate-600 sm:text-base">
+            Access live automotive and machinery auctions across Japan.
+            ラビンインターナショナル株式会社 provides expert bidding support,
+            pre-bid condition report translations, and full export logistics.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href={feed.sellerUrl || "https://auctions.yahoo.co.jp/"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
+              <Gavel className="h-4 w-4" />
+              Open Seller Page
+            </Link>
+            <p className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-semibold tracking-[0.1em] text-blue-700">
+              SELLER ID: {feed.sellerId || "Not configured"}
+            </p>
+          </div>
         </div>
       </div>
 
       {feed.error ? (
-        <div className="mt-6 rounded-2xl border border-amber-300/40 bg-amber-300/10 p-4 text-sm text-amber-100">
+        <div className="mt-6 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800">
           <p className="inline-flex items-center gap-2 font-semibold">
             <CircleAlert className="h-4 w-4" />
             Feed notice
@@ -81,7 +95,7 @@ export default async function YahooAuctionsPage() {
         {feed.listings.map((listing) => (
           <article
             key={listing.auctionId}
-            className="overflow-hidden rounded-2xl border border-[var(--color-site-line)] bg-[#072945]/85 shadow-lg shadow-cyan-950/20"
+            className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-md"
           >
             <div className="relative">
               <Image
@@ -92,30 +106,30 @@ export default async function YahooAuctionsPage() {
                 sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                 className="h-52 w-full object-cover"
               />
-              <span className="absolute left-3 top-3 rounded-full border border-cyan-300/45 bg-[#052a47]/80 px-3 py-1 text-xs font-semibold text-cyan-100">
+              <span className="absolute left-3 top-3 rounded-full border border-blue-200 bg-white/90 px-3 py-1 text-xs font-semibold text-blue-700">
                 {listing.availability}
               </span>
             </div>
 
             <div className="p-5">
-              <p className="text-xs font-semibold tracking-[0.12em] text-cyan-200">
+              <p className="text-xs font-semibold tracking-[0.12em] text-blue-700">
                 AUCTION ID: {listing.auctionId}
               </p>
-              <h2 className="font-industrial mt-2 line-clamp-2 text-2xl text-white">
+              <h2 className="font-industrial mt-2 line-clamp-2 text-2xl text-slate-900">
                 {listing.title}
               </h2>
 
-              <div className="mt-4 grid gap-2 text-sm text-cyan-100">
-                <p className="inline-flex items-center gap-2 rounded-xl border border-cyan-300/20 bg-[#062743] px-3 py-2">
-                  <Scale className="h-4 w-4 text-cyan-300" />
+              <div className="mt-4 grid gap-2 text-sm text-slate-600">
+                <p className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-[var(--color-site-bg-soft)] px-3 py-2">
+                  <Scale className="h-4 w-4 text-blue-600" />
                   Current: {formatJPY(listing.priceJPY)}
                 </p>
-                <p className="inline-flex items-center gap-2 rounded-xl border border-cyan-300/20 bg-[#062743] px-3 py-2">
-                  <PackageSearch className="h-4 w-4 text-cyan-300" />
+                <p className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-[var(--color-site-bg-soft)] px-3 py-2">
+                  <PackageSearch className="h-4 w-4 text-blue-600" />
                   Condition: {listing.condition}
                 </p>
-                <p className="inline-flex items-center gap-2 rounded-xl border border-cyan-300/20 bg-[#062743] px-3 py-2">
-                  <CalendarClock className="h-4 w-4 text-cyan-300" />
+                <p className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-[var(--color-site-bg-soft)] px-3 py-2">
+                  <CalendarClock className="h-4 w-4 text-blue-600" />
                   Valid Until: {formatTime(listing.priceValidUntil)}
                 </p>
               </div>
@@ -124,7 +138,7 @@ export default async function YahooAuctionsPage() {
                 href={listing.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-cyan-300 px-4 py-3 text-sm font-semibold text-[#052643] transition hover:bg-cyan-200"
+                className="btn-primary mt-5 w-full justify-center"
               >
                 View Auction Listing
               </Link>
@@ -134,9 +148,9 @@ export default async function YahooAuctionsPage() {
       </div>
 
       {feed.listings.length === 0 ? (
-        <div className="mt-8 rounded-2xl border border-[var(--color-site-line)] bg-[#072945]/80 p-8 text-center">
-          <p className="font-industrial text-2xl text-white">No Listings Available</p>
-          <p className="mt-2 text-sm text-[var(--color-site-subtext)]">
+        <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+          <p className="font-industrial text-2xl text-slate-900">No Listings Available</p>
+          <p className="mt-2 text-sm text-slate-600">
             Verify seller ID configuration and check if active auctions are visible
             publicly on Yahoo! Auctions.
           </p>
