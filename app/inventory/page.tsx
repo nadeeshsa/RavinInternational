@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { InventoryStockBoard } from "@/components/inventory/InventoryStockBoard";
 import { getPublicInventory } from "@/lib/inventory-store";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Stock Inventory | ラビンインターナショナル株式会社",
   description:

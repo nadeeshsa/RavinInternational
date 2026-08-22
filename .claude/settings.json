@@ -57,7 +57,17 @@
       "Bash(/usr/bin/tail -8 /tmp/nextdev.log)",
       "Bash(/usr/bin/curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://localhost:3000/)",
       "Bash(/usr/bin/curl -s -o /dev/null -w \"admin/inventory: %{http_code}\\\\n\" http://localhost:3000/admin/inventory)",
-      "Bash(/usr/bin/curl -s -o /dev/null -w \"inventory: %{http_code}\\\\n\" http://localhost:3000/inventory)"
+      "Bash(/usr/bin/curl -s -o /dev/null -w \"inventory: %{http_code}\\\\n\" http://localhost:3000/inventory)",
+      "Bash(/usr/bin/curl -s -o /dev/null -w \"prod inventory: %{http_code}\\\\n\" https://ravininternational.vercel.app/inventory)",
+      "Bash(/usr/bin/curl -s -o /dev/null -D - https://ravininternational.vercel.app/admin/inventory)",
+      "Bash(npx --yes vercel blob list --rw-token \"vercel_blob_rw_toGYNAJDZSA8E3ab_4tvJmUqddWTOdV0u4BFPqehVCv4zk9\")",
+      "Bash(/usr/bin/curl -s https://togynajdzsa8e3ab.public.blob.vercel-storage.com/data/inventory.json)",
+      "Bash(/usr/bin/curl -s https://ravininternational.vercel.app/inventory)",
+      "Bash(/usr/bin/curl -s -D - -o /dev/null https://ravininternational.vercel.app/inventory)",
+      "Bash(npx --yes vercel env ls)",
+      "Bash(npx --yes vercel env pull --environment=production /tmp/prod.env --yes)",
+      "Bash(npx --yes vercel env pull /tmp/prod.env --environment=production --yes)",
+      "Bash(npx --yes vercel logs https://ravininternational.vercel.app)"
     ]
   }
 }

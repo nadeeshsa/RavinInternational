@@ -5,6 +5,8 @@ import { FeaturedInventorySection } from "@/components/inventory/FeaturedInvento
 import { getPublicInventory } from "@/lib/inventory-store";
 import { companyInfo } from "@/lib/company-info";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "ラビンインターナショナル株式会社 | Japanese Vehicle And Machinery Export",
   description:
