@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${bilingual.variable} h-full antialiased`}
+      className={`${inter.variable} ${bilingual.variable} h-full scroll-smooth antialiased`}
     >
       <body className="min-h-full bg-[var(--color-site-bg)] text-[var(--color-site-text)]">
         <div className="flex min-h-full flex-col">

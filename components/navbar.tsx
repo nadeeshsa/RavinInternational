@@ -29,24 +29,24 @@ export function Navbar() {
     <header className="sticky top-0 z-40 border-b bg-white/90 shadow-[0_8px_28px_-24px_rgba(5,44,72,0.65)] backdrop-blur-xl" style={{ borderColor: "var(--color-site-line)" }}>
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-3 py-3">
-          <Link href="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
+          <Link href="/" className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3 lg:gap-4">
             <Image
               src={profileLogo}
               alt="ラビンインターナショナル株式会社 logo"
-              className="h-12 w-auto shrink-0 object-contain sm:h-14 lg:h-16"
+              className="h-10 w-auto shrink-0 object-contain sm:h-14 lg:h-16"
               priority
             />
             <span className="flex min-w-0 flex-col">
-              <span className="font-industrial truncate text-lg font-bold tracking-wide text-[var(--color-site-text)] sm:text-2xl">
+              <span className="font-industrial break-words text-sm font-bold leading-snug tracking-wide text-[var(--color-site-text)] sm:text-lg lg:text-2xl">
                 {companyInfo.shortDisplayName}
               </span>
-              <span className="hidden truncate text-xs text-[var(--color-site-subtext)] sm:block sm:text-sm">
+              <span className="hidden break-words text-xs text-[var(--color-site-subtext)] sm:block sm:text-sm">
                 {companyInfo.businessScopeJapanese}
               </span>
             </span>
           </Link>
 
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-3">
             <Link href="/contact" className="hidden lg:inline-flex btn-secondary">
               Contact
             </Link>
@@ -64,7 +64,7 @@ export function Navbar() {
               onClick={() => setMenuOpen((prev) => !prev)}
               aria-expanded={menuOpen}
               aria-label="Toggle navigation menu"
-              className="flex h-11 w-11 items-center justify-center rounded-lg border border-transparent bg-white text-[var(--color-site-subtext)] shadow-sm lg:hidden"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-transparent bg-white text-[var(--color-site-subtext)] shadow-sm sm:h-11 sm:w-11 lg:hidden"
             >
               {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>

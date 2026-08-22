@@ -58,7 +58,22 @@ export default async function MediaPage() {
         </div>
       </div>
 
-      <div className="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <nav className="mt-6 flex w-fit flex-wrap gap-2 rounded-full border border-slate-200 bg-white p-1 shadow-sm">
+        <a
+          href="#photos"
+          className="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-blue-50 hover:text-blue-700"
+        >
+          Photos
+        </a>
+        <a
+          href="#videos"
+          className="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-blue-50 hover:text-blue-700"
+        >
+          Videos
+        </a>
+      </nav>
+
+      <div id="photos" className="mt-8 scroll-mt-28 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-xs font-semibold tracking-[0.17em] text-blue-700">

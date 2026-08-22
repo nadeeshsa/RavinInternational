@@ -12,7 +12,16 @@
       "Bash(/usr/bin/tail -10 /tmp/nextdev.log)",
       "Bash(/usr/bin/curl -s http://localhost:3000/media)",
       "Bash(git check-ignore *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git tag *)",
+      "Bash(git push *)",
+      "Bash(env)",
+      "Bash(npx --yes vercel ls)",
+      "Bash(npx --yes vercel --prod --yes)",
+      "Bash(/usr/bin/curl -s -o /dev/null -w \"prod home: %{http_code}\\\\n\" https://ravininternational.vercel.app/)",
+      "Bash(/usr/bin/curl -s https://ravininternational.vercel.app/)",
+      "Bash(/usr/bin/head -5)"
     ]
   }
 }

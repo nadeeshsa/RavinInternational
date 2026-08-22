@@ -68,7 +68,7 @@ export function CuratedVideoGrid() {
   }, [activeCategory]);
 
   return (
-    <div className="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <div id="videos" className="mt-8 scroll-mt-28 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       <p className="text-xs font-semibold tracking-[0.17em] text-blue-700">VIDEOS</p>
       <h2 className="font-industrial mt-2 text-3xl text-slate-900 sm:text-4xl">
         Operational Video Archive
