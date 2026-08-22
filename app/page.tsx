@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BadgeCheck, CarFront, Gavel, Globe, HardHat, MessageCircle, Video } from "lucide-react";
 import { FeaturedInventorySection } from "@/components/inventory/FeaturedInventorySection";
-import { mockInventory } from "@/data/mock-inventory";
+import { getPublicInventory } from "@/lib/inventory-store";
 import { companyInfo } from "@/lib/company-info";
 
 export const metadata: Metadata = {
@@ -11,7 +11,9 @@ export const metadata: Metadata = {
     `${companyInfo.shortDisplayName} provides stock list updates, auction support, and export coordination for vehicles, heavy machinery, and parts from Japan.`,
 };
 
-export default function Home() {
+export default async function Home() {
+  const inventory = await getPublicInventory();
+
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
       <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
@@ -124,7 +126,7 @@ export default function Home() {
         </div>
       </div>
 
-      <FeaturedInventorySection items={mockInventory} />
+      <FeaturedInventorySection items={inventory} />
     </section>
   );
 }
