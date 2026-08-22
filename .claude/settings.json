@@ -67,7 +67,8 @@
       "Bash(npx --yes vercel env ls)",
       "Bash(npx --yes vercel env pull --environment=production /tmp/prod.env --yes)",
       "Bash(npx --yes vercel env pull /tmp/prod.env --environment=production --yes)",
-      "Bash(npx --yes vercel logs https://ravininternational.vercel.app)"
+      "Bash(npx --yes vercel logs https://ravininternational.vercel.app)",
+      "Bash(/usr/bin/curl -s -D - -o /tmp/inv.html https://ravininternational.vercel.app/inventory)"
     ]
   }
 }
