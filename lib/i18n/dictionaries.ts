@@ -39,9 +39,20 @@ export type Dictionary = {
   auctions: {
     eyebrow: string;
     title: string;
+    description: string;
     viewAll: string;
     cta: string;
     empty: string;
+    emptyHint: string;
+    openSellerPage: string;
+    sellerId: string;
+    notConfigured: string;
+    feedNotice: string;
+    currentPrice: string;
+    condition: string;
+    validUntil: string;
+    ended: string;
+    auctionEnded: string;
   };
   gallery: {
     eyebrow: string;
@@ -168,9 +179,21 @@ export const dictionaries: Record<Language, Dictionary> = {
     auctions: {
       eyebrow: "ヤフオク出品情報",
       title: "ヤフオク出品情報",
+      description:
+        "日本全国のオークションから、ラビンインターナショナル株式会社が入札代行と輸出手続きをサポートします。",
       viewAll: "オークションをすべて見る",
       cta: "オークションを見る",
       empty: "現在出品中のオークションはありません。",
+      emptyHint: "出品者IDの設定をご確認いただくか、後ほど再度ご確認ください。",
+      openSellerPage: "出品者ページを見る",
+      sellerId: "出品者ID",
+      notConfigured: "未設定",
+      feedNotice: "フィード通知",
+      currentPrice: "現在価格",
+      condition: "状態",
+      validUntil: "有効期限",
+      ended: "終了",
+      auctionEnded: "このオークションは終了しました",
     },
     gallery: {
       eyebrow: "検査・出荷の様子",
@@ -295,9 +318,21 @@ export const dictionaries: Record<Language, Dictionary> = {
     auctions: {
       eyebrow: "Yahoo Auctions Listings",
       title: "Yahoo Auctions Listings",
+      description:
+        "Live listings from auctions across Japan — ラビンインターナショナル株式会社 handles bidding support and export logistics.",
       viewAll: "View All Auctions",
       cta: "View Auction",
       empty: "No active auction listings right now.",
+      emptyHint: "Check the seller ID configuration, or check back later.",
+      openSellerPage: "Open Seller Page",
+      sellerId: "Seller ID",
+      notConfigured: "Not configured",
+      feedNotice: "Feed notice",
+      currentPrice: "Current",
+      condition: "Condition",
+      validUntil: "Valid Until",
+      ended: "Ended",
+      auctionEnded: "This auction has ended",
     },
     gallery: {
       eyebrow: "Inspection & Shipping",
