@@ -1,10 +1,10 @@
 "use client";
 
-import type { InventoryCategory } from "@/types/inventory";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 export type InventoryFilterValues = {
   search: string;
-  category: InventoryCategory | "All";
+  category: string;
   make: string;
   minYear: string;
   maxYear: string;
@@ -14,122 +14,128 @@ export type InventoryFilterValues = {
 
 type InventoryFilterProps = {
   values: InventoryFilterValues;
+  categories: string[];
   makes: string[];
   onChange: (partial: Partial<InventoryFilterValues>) => void;
   onReset: () => void;
 };
 
-const categories: Array<InventoryCategory | "All"> = [
-  "All",
-  "Used Cars",
-  "Heavy Machinery",
-  "Equipment",
-  "Parts",
-];
+const fieldStyle = {
+  borderColor: "var(--border)",
+  background: "var(--bg-elevated)",
+  color: "var(--fg)",
+} as const;
 
-export function InventoryFilter({ values, makes, onChange, onReset }: InventoryFilterProps) {
+export function InventoryFilter({ values, categories, makes, onChange, onReset }: InventoryFilterProps) {
+  const { t } = useLanguage();
+  const i = t.inventoryPage;
+
   return (
-    <aside className="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-      <div>
-        <p className="font-industrial text-xl text-slate-900">Find Stock</p>
-        <p className="mt-1 text-sm text-slate-600">
-          Search by stock ID, title, make, or model.
-        </p>
-      </div>
-
+    <div
+      className="rounded-2xl p-5 sm:p-6"
+      style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}
+    >
       <label className="block">
-        <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
-          Search
+        <span className="mb-2 block text-xs font-semibold tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
+          {i.searchLabel}
         </span>
         <input
           type="text"
           value={values.search}
           onChange={(event) => onChange({ search: event.target.value })}
-          placeholder="e.g. HiAce, Komatsu, RVN-HM"
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-400"
+          placeholder={i.searchPlaceholder}
+          className="w-full rounded-xl border px-4 py-3 text-sm outline-none transition"
+          style={fieldStyle}
         />
       </label>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-        <label className="block">
-          <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
-            Category
-          </span>
-          <select
-            value={values.category}
-            onChange={(event) =>
-              onChange({ category: event.target.value as InventoryCategory | "All" })
-            }
-            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400"
-          >
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </label>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {categories.length > 1 ? (
+          <label className="block">
+            <span className="mb-2 block text-xs font-semibold tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
+              {i.categoryLabel}
+            </span>
+            <select
+              value={values.category}
+              onChange={(event) => onChange({ category: event.target.value })}
+              className="w-full rounded-xl border px-4 py-3 text-sm outline-none"
+              style={fieldStyle}
+            >
+              <option value="All">{i.categoryAll}</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
 
-        <label className="block">
-          <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
-            Make
-          </span>
-          <select
-            value={values.make}
-            onChange={(event) => onChange({ make: event.target.value })}
-            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400"
-          >
-            <option value="All">All Makes</option>
-            {makes.map((make) => (
-              <option key={make} value={make}>
-                {make}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+        {makes.length > 1 ? (
+          <label className="block">
+            <span className="mb-2 block text-xs font-semibold tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
+              {i.makeLabel}
+            </span>
+            <select
+              value={values.make}
+              onChange={(event) => onChange({ make: event.target.value })}
+              className="w-full rounded-xl border px-4 py-3 text-sm outline-none"
+              style={fieldStyle}
+            >
+              <option value="All">{i.makeAll}</option>
+              {makes.map((make) => (
+                <option key={make} value={make}>
+                  {make}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
         <div>
-          <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
-            Year Range
+          <span className="mb-2 block text-xs font-semibold tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
+            {i.yearRangeLabel}
           </span>
           <div className="grid grid-cols-2 gap-2">
             <input
               type="number"
               value={values.minYear}
               onChange={(event) => onChange({ minYear: event.target.value })}
-              placeholder="From"
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-400"
+              placeholder={i.yearFrom}
+              className="w-full rounded-xl border px-3 py-2.5 text-sm outline-none"
+              style={fieldStyle}
             />
             <input
               type="number"
               value={values.maxYear}
               onChange={(event) => onChange({ maxYear: event.target.value })}
-              placeholder="To"
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-400"
+              placeholder={i.yearTo}
+              className="w-full rounded-xl border px-3 py-2.5 text-sm outline-none"
+              style={fieldStyle}
             />
           </div>
         </div>
 
         <div>
-          <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
-            Price Range (USD)
+          <span className="mb-2 block text-xs font-semibold tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
+            {i.priceRangeLabel}
           </span>
           <div className="grid grid-cols-2 gap-2">
             <input
               type="number"
               value={values.minPrice}
               onChange={(event) => onChange({ minPrice: event.target.value })}
-              placeholder="Min"
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-400"
+              placeholder={i.priceMin}
+              className="w-full rounded-xl border px-3 py-2.5 text-sm outline-none"
+              style={fieldStyle}
             />
             <input
               type="number"
               value={values.maxPrice}
               onChange={(event) => onChange({ maxPrice: event.target.value })}
-              placeholder="Max"
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-400"
+              placeholder={i.priceMax}
+              className="w-full rounded-xl border px-3 py-2.5 text-sm outline-none"
+              style={fieldStyle}
             />
           </div>
         </div>
@@ -138,10 +144,10 @@ export function InventoryFilter({ values, makes, onChange, onReset }: InventoryF
       <button
         type="button"
         onClick={onReset}
-        className="w-full rounded-xl border border-slate-300 bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+        className="btn-rd-secondary mt-4"
       >
-        Reset Filters
+        {i.resetFilters}
       </button>
-    </aside>
+    </div>
   );
 }

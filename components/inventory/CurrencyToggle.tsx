@@ -9,26 +9,31 @@ type CurrencyToggleProps = {
 
 export function CurrencyToggle({ currency, onCurrencyChange }: CurrencyToggleProps) {
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-slate-50 px-2 py-1 text-xs font-semibold text-slate-700">
+    <div
+      className="inline-flex items-center gap-1 rounded-full border p-1 text-xs font-semibold"
+      style={{ borderColor: "var(--border-strong)", background: "var(--bg-muted)" }}
+    >
       <button
         type="button"
         onClick={() => onCurrencyChange("USD")}
-        className={`rounded-full px-3 py-1 transition ${
+        className="rounded-full px-3 py-1 transition"
+        style={
           currency === "USD"
-            ? "bg-blue-600 text-white"
-            : "hover:bg-white hover:text-slate-900"
-        }`}
+            ? { background: "var(--accent)", color: "var(--accent-fg)" }
+            : { color: "var(--fg-muted)" }
+        }
       >
         USD ($)
       </button>
       <button
         type="button"
         onClick={() => onCurrencyChange("JPY")}
-        className={`rounded-full px-3 py-1 transition ${
+        className="rounded-full px-3 py-1 transition"
+        style={
           currency === "JPY"
-            ? "bg-blue-600 text-white"
-            : "hover:bg-white hover:text-slate-900"
-        }`}
+            ? { background: "var(--accent)", color: "var(--accent-fg)" }
+            : { color: "var(--fg-muted)" }
+        }
       >
         JPY (¥)
       </button>

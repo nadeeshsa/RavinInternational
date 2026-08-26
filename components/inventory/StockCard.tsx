@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { CalendarClock, CircleGauge, Cog, Search } from "lucide-react";
 import type { InventoryCurrency, InventoryItem } from "@/types/inventory";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 type StockCardProps = {
   item: InventoryItem;
@@ -11,10 +12,10 @@ type StockCardProps = {
   onOpenInquiry: (item: InventoryItem) => void;
 };
 
-const statusStyles: Record<InventoryItem["status"], string> = {
-  Available: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  Reserved: "bg-amber-50 text-amber-700 border-amber-200",
-  Sold: "bg-rose-50 text-rose-700 border-rose-200",
+const statusColor: Record<InventoryItem["status"], string> = {
+  Available: "var(--success)",
+  Reserved: "var(--accent)",
+  Sold: "var(--danger)",
 };
 
 function formatCurrency(item: InventoryItem, currency: InventoryCurrency) {
@@ -33,71 +34,76 @@ function formatCurrency(item: InventoryItem, currency: InventoryCurrency) {
   }).format(item.fobPriceJPY);
 }
 
-export function StockCard({
-  item,
-  currency,
-  onOpenDetails,
-  onOpenInquiry,
-}: StockCardProps) {
+export function StockCard({ item, currency, onOpenDetails, onOpenInquiry }: StockCardProps) {
+  const { t } = useLanguage();
+  const i = t.inventoryPage;
   const previewImage =
     item.images[0] ??
     "https://images.pexels.com/photos/159358/construction-site-build-construction-work-159358.jpeg";
+  const statusText = item.status;
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-md">
+    <article
+      className="overflow-hidden rounded-2xl transition hover:-translate-y-1"
+      style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}
+    >
       <div className="relative">
         <Image
           src={previewImage}
-          alt={item.title}
+          alt={item.title.trim()}
           width={1200}
           height={800}
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
           className="h-52 w-full object-cover"
         />
         <span
-          className={`absolute left-3 top-3 rounded-full border px-3 py-1 text-xs font-semibold ${statusStyles[item.status]}`}
+          className="absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-semibold"
+          style={{
+            background: "var(--bg-elevated)",
+            color: statusColor[item.status],
+            border: `1px solid ${statusColor[item.status]}`,
+          }}
         >
-          {item.status}
+          {statusText}
         </span>
       </div>
 
       <div className="p-5">
-        <p className="text-xs font-semibold tracking-[0.12em] text-blue-700">
-          STOCK ID: {item.stockId}
+        <p className="text-xs font-semibold tracking-[0.1em]" style={{ color: "var(--accent)" }}>
+          {item.stockId}
         </p>
-        <h3 className="font-industrial mt-2 text-2xl text-slate-900">{item.title}</h3>
-        <p className="mt-1 text-sm text-slate-600">
-          {item.make} {item.model} | {item.category}
+        <h3 className="mt-2 text-xl font-bold" style={{ color: "var(--fg)" }}>
+          {item.title.trim()}
+        </h3>
+        <p className="mt-1 text-sm" style={{ color: "var(--fg-muted)" }}>
+          {item.make} {item.model} · {item.category}
         </p>
 
-        <div className="mt-4 grid grid-cols-1 gap-2 text-sm text-slate-700 sm:grid-cols-3">
-          <SpecPill icon={CalendarClock} label="Year" value={String(item.year)} />
-          <SpecPill icon={CircleGauge} label="Usage" value={item.mileageOrHours} />
-          <SpecPill icon={Cog} label="Engine" value={item.engineSize} />
+        <div className="mt-4 grid grid-cols-1 gap-2 text-sm sm:grid-cols-3">
+          <SpecPill icon={CalendarClock} label={i.year} value={String(item.year)} />
+          <SpecPill icon={CircleGauge} label={i.usage} value={item.mileageOrHours} />
+          <SpecPill icon={Cog} label={i.engine} value={item.engineSize} />
         </div>
 
-        <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
-          <p className="text-xs tracking-[0.12em] text-slate-500">FOB PRICE</p>
-          <p className="font-industrial mt-1 text-2xl text-slate-900">
+        <div
+          className="mt-5 rounded-xl px-4 py-3"
+          style={{ background: "var(--bg-muted)", border: "1px solid var(--border)" }}
+        >
+          <p className="text-xs tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
+            {i.fobPrice.toUpperCase()}
+          </p>
+          <p className="mt-1 text-xl font-bold" style={{ color: "var(--fg)" }}>
             {formatCurrency(item, currency)}
           </p>
         </div>
 
         <div className="mt-5 grid grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={() => onOpenDetails(item)}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
-          >
+          <button type="button" onClick={() => onOpenDetails(item)} className="btn-rd-secondary text-sm">
             <Search className="h-4 w-4" />
-            View Specs
+            {i.viewSpecs}
           </button>
-          <button
-            type="button"
-            onClick={() => onOpenInquiry(item)}
-            className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
-          >
-            Inquire Now
+          <button type="button" onClick={() => onOpenInquiry(item)} className="btn-rd-primary text-sm">
+            {i.inquireNow}
           </button>
         </div>
       </div>
@@ -113,12 +119,14 @@ type SpecPillProps = {
 
 function SpecPill({ icon: Icon, label, value }: SpecPillProps) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2">
-      <div className="inline-flex items-center gap-1.5 text-xs text-slate-500">
+    <div className="rounded-xl px-3 py-2" style={{ background: "var(--bg-muted)", border: "1px solid var(--border)" }}>
+      <div className="inline-flex items-center gap-1.5 text-xs" style={{ color: "var(--fg-subtle)" }}>
         <Icon className="h-3.5 w-3.5" />
         {label}
       </div>
-      <p className="mt-1 truncate text-xs font-medium text-slate-700">{value}</p>
+      <p className="mt-1 truncate text-xs font-medium" style={{ color: "var(--fg-muted)" }}>
+        {value}
+      </p>
     </div>
   );
 }

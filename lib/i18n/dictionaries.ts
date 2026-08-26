@@ -59,6 +59,38 @@ export type Dictionary = {
     contactLabel: string;
     rights: string;
   };
+  inventoryPage: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    searchLabel: string;
+    searchPlaceholder: string;
+    categoryLabel: string;
+    categoryAll: string;
+    makeLabel: string;
+    makeAll: string;
+    yearRangeLabel: string;
+    yearFrom: string;
+    yearTo: string;
+    priceRangeLabel: string;
+    priceMin: string;
+    priceMax: string;
+    resetFilters: string;
+    showing: string;
+    of: string;
+    listings: string;
+    empty: string;
+    emptyHint: string;
+    viewSpecs: string;
+    inquireNow: string;
+    fobPrice: string;
+    year: string;
+    usage: string;
+    engine: string;
+    page: string;
+    prev: string;
+    next: string;
+  };
 };
 
 export const dictionaries: Record<Language, Dictionary> = {
@@ -156,6 +188,38 @@ export const dictionaries: Record<Language, Dictionary> = {
       contactLabel: "お問い合わせ",
       rights: "All rights reserved.",
     },
+    inventoryPage: {
+      eyebrow: "在庫一覧",
+      title: "輸出可能な車両・重機・部品",
+      description: "カテゴリー・メーカー・年式・価格で絞り込み、詳細をご確認いただけます。",
+      searchLabel: "検索",
+      searchPlaceholder: "例: HiAce, Komatsu, RVN-HM",
+      categoryLabel: "カテゴリー",
+      categoryAll: "すべてのカテゴリー",
+      makeLabel: "メーカー",
+      makeAll: "すべてのメーカー",
+      yearRangeLabel: "年式",
+      yearFrom: "from",
+      yearTo: "to",
+      priceRangeLabel: "価格帯 (USD)",
+      priceMin: "最小",
+      priceMax: "最大",
+      resetFilters: "フィルターをリセット",
+      showing: "表示中",
+      of: "/",
+      listings: "件",
+      empty: "該当する在庫がありません",
+      emptyHint: "年式・価格の条件を広げるか、フィルターをリセットしてください。",
+      viewSpecs: "詳細を見る",
+      inquireNow: "お問い合わせ",
+      fobPrice: "FOB価格",
+      year: "年式",
+      usage: "使用状況",
+      engine: "エンジン",
+      page: "ページ",
+      prev: "前へ",
+      next: "次へ",
+    },
   },
   en: {
     nav: {
@@ -250,6 +314,38 @@ export const dictionaries: Record<Language, Dictionary> = {
       navLabel: "Navigation",
       contactLabel: "Contact",
       rights: "All rights reserved.",
+    },
+    inventoryPage: {
+      eyebrow: "Live Export Catalog",
+      title: "Verified Vehicles, Heavy Machinery & Parts",
+      description: "Filter by category, make, year, and price, then open a listing for full specs.",
+      searchLabel: "Search",
+      searchPlaceholder: "e.g. HiAce, Komatsu, RVN-HM",
+      categoryLabel: "Category",
+      categoryAll: "All Categories",
+      makeLabel: "Make",
+      makeAll: "All Makes",
+      yearRangeLabel: "Year Range",
+      yearFrom: "From",
+      yearTo: "To",
+      priceRangeLabel: "Price Range (USD)",
+      priceMin: "Min",
+      priceMax: "Max",
+      resetFilters: "Reset Filters",
+      showing: "Showing",
+      of: "of",
+      listings: "listings",
+      empty: "No Matching Stock",
+      emptyHint: "Try broadening year or price range, or reset filters.",
+      viewSpecs: "View Specs",
+      inquireNow: "Inquire Now",
+      fobPrice: "FOB Price",
+      year: "Year",
+      usage: "Usage",
+      engine: "Engine",
+      page: "Page",
+      prev: "Prev",
+      next: "Next",
     },
   },
 };
