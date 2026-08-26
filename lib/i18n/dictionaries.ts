@@ -127,6 +127,25 @@ export type Dictionary = {
     lightboxPrev: string;
     lightboxNext: string;
   };
+  aboutPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    callMobile: string;
+    email: string;
+    whatsapp: string;
+    directChat: string;
+    complianceVerified: string;
+    credentialsTitle: string;
+    companyName: string;
+    businessScope: string;
+    representativeDirector: string;
+    dealerLicense: string;
+    address: string;
+    mobile: string;
+    telFax: string;
+    officeTitle: string;
+  };
 };
 
 export const dictionaries: Record<Language, Dictionary> = {
@@ -295,6 +314,26 @@ export const dictionaries: Record<Language, Dictionary> = {
       lightboxPrev: "前の写真",
       lightboxNext: "次の写真",
     },
+    aboutPage: {
+      eyebrow: "会社概要",
+      title: "信頼と実績のある日本の輸出業者",
+      subtitle:
+        "神奈川県を拠点に、正規ライセンスを取得したラビンインターナショナル株式会社が、確かな輸出サービスをご提供します。",
+      callMobile: "電話",
+      email: "メール",
+      whatsapp: "WhatsApp",
+      directChat: "直接チャット",
+      complianceVerified: "認証済み事業者",
+      credentialsTitle: "会社情報・許可情報",
+      companyName: "会社名",
+      businessScope: "事業内容",
+      representativeDirector: "代表取締役",
+      dealerLicense: "古物商許可",
+      address: "所在地",
+      mobile: "携帯電話",
+      telFax: "TEL / FAX",
+      officeTitle: "神奈川オフィス",
+    },
   },
   en: {
     nav: {
@@ -460,6 +499,26 @@ export const dictionaries: Record<Language, Dictionary> = {
       lightboxClose: "Close",
       lightboxPrev: "Previous photo",
       lightboxNext: "Next photo",
+    },
+    aboutPage: {
+      eyebrow: "About Our Company",
+      title: "Proven Integrity in Japanese Export",
+      subtitle:
+        "Operating from Kanagawa, Japan, ラビンインターナショナル株式会社 is a licensed dealer providing reliable global export services.",
+      callMobile: "Call Mobile",
+      email: "Email",
+      whatsapp: "WhatsApp",
+      directChat: "Direct chat",
+      complianceVerified: "Compliance Verified",
+      credentialsTitle: "Company Credentials",
+      companyName: "Company Name",
+      businessScope: "Business Scope",
+      representativeDirector: "Representative Director",
+      dealerLicense: "Dealer License",
+      address: "Address",
+      mobile: "Mobile",
+      telFax: "TEL / FAX",
+      officeTitle: "Kanagawa Office",
     },
   },
 };
