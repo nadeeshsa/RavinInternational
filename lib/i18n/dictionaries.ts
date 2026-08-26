@@ -102,6 +102,31 @@ export type Dictionary = {
     prev: string;
     next: string;
   };
+  mediaPage: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    tabPhotos: string;
+    tabVideos: string;
+    photosEyebrow: string;
+    photosTitle: string;
+    openInMaps: string;
+    photoAlt: string;
+    videosEyebrow: string;
+    videosTitle: string;
+    filterAll: string;
+    categoryClassic: string;
+    categoryAuctions: string;
+    categoryInspections: string;
+    categorySpecialized: string;
+    subscribeTitle: string;
+    subscribeBody: string;
+    subscribeCta: string;
+    lightboxOf: string;
+    lightboxClose: string;
+    lightboxPrev: string;
+    lightboxNext: string;
+  };
 };
 
 export const dictionaries: Record<Language, Dictionary> = {
@@ -243,6 +268,33 @@ export const dictionaries: Record<Language, Dictionary> = {
       prev: "前へ",
       next: "次へ",
     },
+    mediaPage: {
+      eyebrow: "運用・輸出メディア",
+      title: "検査・ヤード作業と希少車両の記録",
+      description:
+        "実際の検査・ヤード作業の様子をご覧いただけます。ラビンインターナショナル株式会社がどのように車両・機械を検査し、輸出準備を行っているかをご紹介します。",
+      tabPhotos: "写真",
+      tabVideos: "動画",
+      photosEyebrow: "写真",
+      photosTitle: "検査・出荷の記録",
+      openInMaps: "Google マップで開く",
+      photoAlt: "検査・輸出作業の様子",
+      videosEyebrow: "動画",
+      videosTitle: "運用動画アーカイブ",
+      filterAll: "すべて",
+      categoryClassic: "クラシックカー",
+      categoryAuctions: "特選オークション",
+      categoryInspections: "車両検査",
+      categorySpecialized: "特殊車両",
+      subscribeTitle: "公式チャンネルでヤードの最新情報をチェック",
+      subscribeBody:
+        "新着在庫や希少なオークション車両の入荷情報を、いち早く動画でお届けします。",
+      subscribeCta: "@Jdmpqa2994 をYouTubeで見る",
+      lightboxOf: "/",
+      lightboxClose: "閉じる",
+      lightboxPrev: "前の写真",
+      lightboxNext: "次の写真",
+    },
   },
   en: {
     nav: {
@@ -381,6 +433,33 @@ export const dictionaries: Record<Language, Dictionary> = {
       page: "Page",
       prev: "Prev",
       next: "Next",
+    },
+    mediaPage: {
+      eyebrow: "Operations & Export Media",
+      title: "Documented Inspections, Yard Work & Rare Finds",
+      description:
+        "A real look at our inspection and yard operations — see how ラビンインターナショナル株式会社 inspects and prepares vehicles and machinery for export.",
+      tabPhotos: "Photos",
+      tabVideos: "Videos",
+      photosEyebrow: "Photos",
+      photosTitle: "Inspection & Shipping Archive",
+      openInMaps: "Open In Google Maps",
+      photoAlt: "Inspection and export operations photo",
+      videosEyebrow: "Videos",
+      videosTitle: "Operational Video Archive",
+      filterAll: "All",
+      categoryClassic: "Classic Vehicles",
+      categoryAuctions: "Special Auctions",
+      categoryInspections: "Vehicle Inspections",
+      categorySpecialized: "Specialized Units",
+      subscribeTitle: "Subscribe to Our Official Channel for Real-Time Yard Updates",
+      subscribeBody:
+        "Get immediate video notifications whenever we receive new stock or inspect rare auction arrivals.",
+      subscribeCta: "Visit @Jdmpqa2994 on YouTube",
+      lightboxOf: "of",
+      lightboxClose: "Close",
+      lightboxPrev: "Previous photo",
+      lightboxNext: "Next photo",
     },
   },
 };

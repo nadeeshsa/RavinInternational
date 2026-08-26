@@ -3,12 +3,13 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { PlayCircle } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 type MediaVideo = {
   id: string;
   youtubeId: string;
   title: string;
-  category: string;
+  category: "Classic Vehicles" | "Special Auctions" | "Vehicle Inspections" | "Specialized Units";
   description: string;
 };
 
@@ -55,41 +56,51 @@ const mediaVideos: MediaVideo[] = [
   },
 ];
 
-const filterCategories = ["All", "Classic Vehicles", "Special Auctions", "Vehicle Inspections"];
-
 export function CuratedVideoGrid() {
+  const { t } = useLanguage();
+  const m = t.mediaPage;
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
+  const categoryLabels: Record<MediaVideo["category"], string> = {
+    "Classic Vehicles": m.categoryClassic,
+    "Special Auctions": m.categoryAuctions,
+    "Vehicle Inspections": m.categoryInspections,
+    "Specialized Units": m.categorySpecialized,
+  };
+
+  const filterCategories: string[] = ["All", "Classic Vehicles", "Special Auctions", "Vehicle Inspections"];
+
   const filteredVideos = useMemo(() => {
-    if (activeCategory === "All") {
-      return mediaVideos;
-    }
+    if (activeCategory === "All") return mediaVideos;
     return mediaVideos.filter((video) => video.category === activeCategory);
   }, [activeCategory]);
 
   return (
-    <div id="videos" className="mt-8 scroll-mt-28 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-      <p className="text-xs font-semibold tracking-[0.17em] text-blue-700">VIDEOS</p>
-      <h2 className="font-industrial mt-2 text-3xl text-slate-900 sm:text-4xl">
-        Operational Video Archive
+    <div id="videos" className="mt-8 scroll-mt-28 rounded-2xl p-6 sm:p-8" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+      <p className="text-xs font-semibold uppercase tracking-[0.12em]" style={{ color: "var(--accent)" }}>
+        {m.videosEyebrow}
+      </p>
+      <h2 className="rd-balance mt-2 text-3xl font-bold sm:text-4xl" style={{ color: "var(--fg)" }}>
+        {m.videosTitle}
       </h2>
 
       <div className="mt-5 flex flex-wrap gap-2">
         {filterCategories.map((category) => {
           const active = category === activeCategory;
+          const label = category === "All" ? m.filterAll : categoryLabels[category as MediaVideo["category"]];
           return (
             <button
               key={category}
               type="button"
               onClick={() => setActiveCategory(category)}
-              className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+              className="rounded-full border px-4 py-2 text-sm font-semibold transition"
+              style={
                 active
-                  ? "border-transparent text-white"
-                  : "border-slate-200 text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
-              }`}
-              style={active ? { backgroundColor: "var(--color-site-accent)" } : undefined}
+                  ? { background: "var(--accent)", borderColor: "var(--accent)", color: "var(--accent-fg)" }
+                  : { borderColor: "var(--border-strong)", color: "var(--fg-muted)" }
+              }
             >
-              {category}
+              {label}
             </button>
           );
         })}
@@ -97,10 +108,7 @@ export function CuratedVideoGrid() {
 
       <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {filteredVideos.map((video) => (
-          <article
-            key={video.id}
-            className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
-          >
+          <article key={video.id} className="overflow-hidden rounded-2xl" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
             <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-black">
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
@@ -112,34 +120,38 @@ export function CuratedVideoGrid() {
             </div>
 
             <div className="p-4">
-              <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold tracking-[0.1em] text-blue-700">
-                {video.category}
+              <span
+                className="inline-flex rounded-full px-3 py-1 text-xs font-semibold tracking-[0.08em]"
+                style={{ border: "1px solid var(--border-strong)", color: "var(--accent)" }}
+              >
+                {categoryLabels[video.category]}
               </span>
-              <h3 className="font-industrial mt-3 line-clamp-2 text-lg text-slate-900">
+              <h3 className="mt-3 line-clamp-2 text-base font-bold" style={{ color: "var(--fg)" }}>
                 {video.title}
               </h3>
-              <p className="mt-2 text-sm leading-7 text-slate-600">{video.description}</p>
+              <p className="mt-2 text-sm leading-6" style={{ color: "var(--fg-muted)" }}>
+                {video.description}
+              </p>
             </div>
           </article>
         ))}
       </div>
 
-      <div className="mt-8 overflow-hidden rounded-3xl border border-slate-200 bg-[var(--color-site-bg-soft)] p-6 text-center sm:p-8">
-        <PlayCircle className="mx-auto h-8 w-8 text-blue-600" />
-        <h3 className="font-industrial mt-3 text-2xl text-slate-900 sm:text-3xl">
-          Subscribe to Our Official Channel for Real-Time Yard Updates
+      <div className="mt-8 overflow-hidden rounded-2xl p-6 text-center sm:p-8" style={{ background: "var(--bg-muted)", border: "1px solid var(--border)" }}>
+        <PlayCircle className="mx-auto h-8 w-8" style={{ color: "var(--accent)" }} />
+        <h3 className="rd-balance mt-3 text-2xl font-bold sm:text-3xl" style={{ color: "var(--fg)" }}>
+          {m.subscribeTitle}
         </h3>
-        <p className="mx-auto mt-2 max-w-2xl text-sm leading-7 text-slate-600">
-          Get immediate video notifications whenever ラビンインターナショナル株式会社
-          receives new stock or inspects rare auction arrivals.
+        <p className="mx-auto mt-2 max-w-2xl text-sm leading-6" style={{ color: "var(--fg-muted)" }}>
+          {m.subscribeBody}
         </p>
         <Link
           href="https://www.youtube.com/@Jdmpqa2994"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-primary mt-5 inline-flex whitespace-normal text-center"
+          className="btn-rd-primary mt-5 inline-flex whitespace-normal text-center"
         >
-          Visit @Jdmpqa2994 on YouTube
+          {m.subscribeCta}
         </Link>
       </div>
     </div>
