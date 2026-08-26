@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { companyInfo } from "@/lib/company-info";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 type StockContext = {
   stockId: string;
@@ -30,15 +31,17 @@ type InquiryPayload = {
   fobPriceJPY?: number;
 };
 
-const defaultMessage =
-  "Hello, I am interested in this unit. Please share final quote, shipping details, and payment terms.";
-
 export function InquiryForm({
   stockContext,
-  submitLabel = "Send Inquiry",
+  submitLabel,
   onSuccess,
   redirectToWhatsApp = false,
 }: InquiryFormProps) {
+  const { t } = useLanguage();
+  const c = t.contactPage;
+  const defaultMessage =
+    "Hello, I am interested in this unit. Please share final quote, shipping details, and payment terms.";
+
   const [customerName, setCustomerName] = useState("");
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
@@ -52,27 +55,13 @@ export function InquiryForm({
   }>({ kind: "idle", message: "" });
 
   const readonlyPriceUSD = useMemo(() => {
-    if (!stockContext) {
-      return "";
-    }
-
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-    }).format(stockContext.fobPriceUSD);
+    if (!stockContext) return "";
+    return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(stockContext.fobPriceUSD);
   }, [stockContext]);
 
   const readonlyPriceJPY = useMemo(() => {
-    if (!stockContext) {
-      return "";
-    }
-
-    return new Intl.NumberFormat("ja-JP", {
-      style: "currency",
-      currency: "JPY",
-      maximumFractionDigits: 0,
-    }).format(stockContext.fobPriceJPY);
+    if (!stockContext) return "";
+    return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 }).format(stockContext.fobPriceJPY);
   }, [stockContext]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -95,7 +84,7 @@ export function InquiryForm({
 
     if (redirectToWhatsApp) {
       const whatsappLines = [
-        "Hello ラビンインターナショナル株式会社, I would like to submit a contact request.",
+        `Hello ${companyInfo.companyNameJapanese}, I would like to submit a contact request.`,
         "",
         `Customer Name: ${payload.customerName}`,
         `Email: ${payload.email}`,
@@ -116,9 +105,7 @@ export function InquiryForm({
       }
 
       const separator = companyInfo.whatsappLink.includes("?") ? "&" : "?";
-      const whatsappUrl =
-        `${companyInfo.whatsappLink}${separator}text=` +
-        encodeURIComponent(whatsappLines.join("\n"));
+      const whatsappUrl = `${companyInfo.whatsappLink}${separator}text=` + encodeURIComponent(whatsappLines.join("\n"));
 
       onSuccess?.();
       window.open(whatsappUrl, "_self");
@@ -128,29 +115,17 @@ export function InquiryForm({
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const body = (await response.json()) as { message?: string };
       if (!response.ok) {
-        setSubmitState({
-          kind: "error",
-          message:
-            body.message ||
-            "Unable to send inquiry right now. Please try WhatsApp or email.",
-        });
+        setSubmitState({ kind: "error", message: body.message || c.errorFallback });
         return;
       }
 
-      setSubmitState({
-        kind: "success",
-        message:
-          body.message ||
-          "Inquiry sent successfully. Our team will contact you soon.",
-      });
+      setSubmitState({ kind: "success", message: body.message || c.successFallback });
 
       setCustomerName("");
       setEmail("");
@@ -160,10 +135,7 @@ export function InquiryForm({
       setMessage(defaultMessage);
       onSuccess?.();
     } catch {
-      setSubmitState({
-        kind: "error",
-        message: "Network issue while submitting inquiry. Please try again.",
-      });
+      setSubmitState({ kind: "error", message: c.networkError });
     } finally {
       setIsSubmitting(false);
     }
@@ -178,117 +150,92 @@ export function InquiryForm({
           <input type="hidden" name="fobPriceUSD" value={stockContext.fobPriceUSD} />
           <input type="hidden" name="fobPriceJPY" value={stockContext.fobPriceJPY} />
 
-          <div className="rounded-2xl border border-slate-200 bg-[var(--color-site-bg-soft)] p-4">
-            <p className="text-xs font-semibold tracking-[0.13em] text-blue-700">
-              STOCK QUOTE CONTEXT
+          <div className="rounded-xl p-4" style={{ background: "var(--bg-muted)", border: "1px solid var(--border)" }}>
+            <p className="text-xs font-semibold uppercase tracking-[0.1em]" style={{ color: "var(--accent)" }}>
+              {c.stockQuoteContext}
             </p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              <ReadonlyField label="Stock ID" value={stockContext.stockId} />
-              <ReadonlyField label="Vehicle Name" value={stockContext.vehicleName} />
-              <ReadonlyField label="FOB Price (USD)" value={readonlyPriceUSD} />
-              <ReadonlyField label="FOB Price (JPY)" value={readonlyPriceJPY} />
+              <ReadonlyField label={c.stockId} value={stockContext.stockId} />
+              <ReadonlyField label={c.vehicleName} value={stockContext.vehicleName} />
+              <ReadonlyField label={c.fobPriceUSD} value={readonlyPriceUSD} />
+              <ReadonlyField label={c.fobPriceJPY} value={readonlyPriceJPY} />
             </div>
           </div>
         </>
       ) : null}
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <TextField
-          label="Customer Name"
-          value={customerName}
-          onChange={setCustomerName}
-          placeholder="Your full name"
-        />
-        <TextField
-          label="Email"
-          value={email}
-          onChange={setEmail}
-          type="email"
-          placeholder="you@example.com"
-        />
-        <TextField
-          label="Country"
-          value={country}
-          onChange={setCountry}
-          placeholder="e.g. Kenya"
-        />
-        <TextField
-          label="Target Destination Port"
-          value={destinationPort}
-          onChange={setDestinationPort}
-          placeholder="e.g. Mombasa"
-        />
-        <TextField
-          label="Phone Number"
-          value={phoneNumber}
-          onChange={setPhoneNumber}
-          placeholder="+254 ..."
-        />
+        <TextField id="inquiry-name" label={c.nameLabel} value={customerName} onChange={setCustomerName} placeholder={c.namePlaceholder} required requiredLabel={c.required} />
+        <TextField id="inquiry-email" label={c.emailLabel} value={email} onChange={setEmail} type="email" placeholder={c.emailPlaceholder} required requiredLabel={c.required} />
+        <TextField id="inquiry-country" label={c.countryLabel} value={country} onChange={setCountry} placeholder={c.countryPlaceholder} required requiredLabel={c.required} />
+        <TextField id="inquiry-destination" label={c.destinationLabel} value={destinationPort} onChange={setDestinationPort} placeholder={c.destinationPlaceholder} required requiredLabel={c.required} />
+        <TextField id="inquiry-phone" label={c.phoneLabel} value={phoneNumber} onChange={setPhoneNumber} placeholder={c.phonePlaceholder} required requiredLabel={c.required} />
       </div>
 
-      <label className="block">
-        <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
-          Message
+      <label htmlFor="inquiry-message" className="block">
+        <span className="mb-2 block text-xs font-semibold tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
+          {c.messageLabel} <span style={{ color: "var(--danger)" }}>({c.required})</span>
         </span>
         <textarea
+          id="inquiry-message"
           required
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           rows={5}
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-400"
+          className="w-full rounded-xl px-4 py-3 text-sm outline-none"
+          style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--fg)" }}
         />
       </label>
 
       {submitState.kind !== "idle" ? (
         <p
-          className={`rounded-xl border px-4 py-3 text-sm ${
+          className="rounded-xl px-4 py-3 text-sm"
+          style={
             submitState.kind === "success"
-              ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-              : "border-rose-200 bg-rose-50 text-rose-800"
-          }`}
+              ? { border: "1px solid var(--success)", background: "var(--bg-muted)", color: "var(--success)" }
+              : { border: "1px solid var(--danger)", background: "var(--bg-muted)", color: "var(--danger)" }
+          }
         >
           {submitState.message}
         </p>
       ) : null}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-70"
-      >
-        {isSubmitting ? "Sending..." : submitLabel}
+      <button type="submit" disabled={isSubmitting} className="btn-rd-primary w-full disabled:cursor-not-allowed disabled:opacity-70">
+        {isSubmitting ? c.submitting : submitLabel || c.submit}
       </button>
     </form>
   );
 }
 
 type TextFieldProps = {
+  id: string;
   label: string;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
   type?: "text" | "email";
+  required?: boolean;
+  requiredLabel?: string;
 };
 
-function TextField({
-  label,
-  value,
-  onChange,
-  placeholder,
-  type = "text",
-}: TextFieldProps) {
+function TextField({ id, label, value, onChange, placeholder, type = "text", required, requiredLabel }: TextFieldProps) {
   return (
-    <label className="block">
-      <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
+    <label htmlFor={id} className="block">
+      <span className="mb-2 block text-xs font-semibold tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
         {label}
+        {required ? (
+          <span style={{ color: "var(--danger)" }}> ({requiredLabel})</span>
+        ) : null}
       </span>
       <input
-        required
+        id={id}
+        required={required}
         type={type}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-400"
+        className="w-full rounded-xl px-4 py-3 text-sm outline-none"
+        style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--fg)" }}
       />
     </label>
   );
@@ -302,13 +249,14 @@ type ReadonlyFieldProps = {
 function ReadonlyField({ label, value }: ReadonlyFieldProps) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
+      <span className="mb-2 block text-xs font-semibold tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
         {label}
       </span>
       <input
         readOnly
         value={value}
-        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700"
+        className="w-full rounded-xl px-4 py-3 text-sm"
+        style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--fg-muted)" }}
       />
     </label>
   );

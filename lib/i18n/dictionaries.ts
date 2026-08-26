@@ -146,6 +146,42 @@ export type Dictionary = {
     telFax: string;
     officeTitle: string;
   };
+  contactPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    formTitle: string;
+    formSubtitle: string;
+    stockQuoteContext: string;
+    stockId: string;
+    vehicleName: string;
+    fobPriceUSD: string;
+    fobPriceJPY: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    countryLabel: string;
+    countryPlaceholder: string;
+    destinationLabel: string;
+    destinationPlaceholder: string;
+    phoneLabel: string;
+    phonePlaceholder: string;
+    messageLabel: string;
+    required: string;
+    submit: string;
+    submitting: string;
+    successFallback: string;
+    errorFallback: string;
+    networkError: string;
+    directContactTitle: string;
+    mobileLabel: string;
+    telFaxLabel: string;
+    emailLabel2: string;
+    whatsappButton: string;
+    emailButton: string;
+    officeTitle: string;
+  };
 };
 
 export const dictionaries: Record<Language, Dictionary> = {
@@ -334,6 +370,43 @@ export const dictionaries: Record<Language, Dictionary> = {
       telFax: "TEL / FAX",
       officeTitle: "神奈川オフィス",
     },
+    contactPage: {
+      eyebrow: "お問い合わせ窓口",
+      title: "お見積もり・輸送のご相談",
+      subtitle:
+        "車両・重機・機械・部品に関するお問い合わせをお送りください。輸出可能状況、仕向港までの見積り、お支払い方法についてご案内いたします。",
+      formTitle: "お問い合わせを送る",
+      formSubtitle: "ご連絡先と仕向地をご入力ください。通常1営業日以内にご返信いたします。",
+      stockQuoteContext: "在庫お見積り情報",
+      stockId: "在庫ID",
+      vehicleName: "車両名",
+      fobPriceUSD: "FOB価格 (USD)",
+      fobPriceJPY: "FOB価格 (JPY)",
+      nameLabel: "お名前",
+      namePlaceholder: "山田 太郎",
+      emailLabel: "メールアドレス",
+      emailPlaceholder: "you@example.com",
+      countryLabel: "国",
+      countryPlaceholder: "例: ケニア",
+      destinationLabel: "仕向港",
+      destinationPlaceholder: "例: モンバサ",
+      phoneLabel: "電話番号",
+      phonePlaceholder: "+254 ...",
+      messageLabel: "メッセージ",
+      required: "必須",
+      submit: "送信する",
+      submitting: "送信中...",
+      successFallback: "お問い合わせを受け付けました。担当者よりご連絡いたします。",
+      errorFallback: "送信できませんでした。WhatsAppまたはメールでご連絡ください。",
+      networkError: "通信エラーが発生しました。もう一度お試しください。",
+      directContactTitle: "直接お問い合わせ",
+      mobileLabel: "携帯電話",
+      telFaxLabel: "TEL / FAX",
+      emailLabel2: "メール",
+      whatsappButton: "WhatsApp",
+      emailButton: "メールを送る",
+      officeTitle: "神奈川オフィス",
+    },
   },
   en: {
     nav: {
@@ -518,6 +591,43 @@ export const dictionaries: Record<Language, Dictionary> = {
       address: "Address",
       mobile: "Mobile",
       telFax: "TEL / FAX",
+      officeTitle: "Kanagawa Office",
+    },
+    contactPage: {
+      eyebrow: "Contact & Inquiry Desk",
+      title: "Request A Quote Or Shipping Consultation",
+      subtitle:
+        "Submit your inquiry for vehicles, machinery, equipment, or parts. Our export team will respond with availability, destination port estimate, and payment process details.",
+      formTitle: "Send Inquiry",
+      formSubtitle: "Fill in your details and destination information. We usually reply within one business day.",
+      stockQuoteContext: "Stock Quote Context",
+      stockId: "Stock ID",
+      vehicleName: "Vehicle Name",
+      fobPriceUSD: "FOB Price (USD)",
+      fobPriceJPY: "FOB Price (JPY)",
+      nameLabel: "Customer Name",
+      namePlaceholder: "Your full name",
+      emailLabel: "Email",
+      emailPlaceholder: "you@example.com",
+      countryLabel: "Country",
+      countryPlaceholder: "e.g. Kenya",
+      destinationLabel: "Target Destination Port",
+      destinationPlaceholder: "e.g. Mombasa",
+      phoneLabel: "Phone Number",
+      phonePlaceholder: "+254 ...",
+      messageLabel: "Message",
+      required: "Required",
+      submit: "Send Inquiry",
+      submitting: "Sending...",
+      successFallback: "Inquiry sent successfully. Our team will contact you soon.",
+      errorFallback: "Unable to send inquiry right now. Please try WhatsApp or email.",
+      networkError: "Network issue while submitting inquiry. Please try again.",
+      directContactTitle: "Direct Contact",
+      mobileLabel: "Mobile",
+      telFaxLabel: "TEL / FAX",
+      emailLabel2: "Email",
+      whatsappButton: "WhatsApp",
+      emailButton: "Email Us",
       officeTitle: "Kanagawa Office",
     },
   },
