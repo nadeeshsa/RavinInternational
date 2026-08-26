@@ -39,9 +39,20 @@ export type Dictionary = {
   auctions: {
     eyebrow: string;
     title: string;
+    description: string;
     viewAll: string;
     cta: string;
     empty: string;
+    emptyHint: string;
+    openSellerPage: string;
+    sellerId: string;
+    notConfigured: string;
+    feedNotice: string;
+    currentPrice: string;
+    condition: string;
+    validUntil: string;
+    ended: string;
+    auctionEnded: string;
   };
   gallery: {
     eyebrow: string;
@@ -58,6 +69,118 @@ export type Dictionary = {
     navLabel: string;
     contactLabel: string;
     rights: string;
+  };
+  inventoryPage: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    searchLabel: string;
+    searchPlaceholder: string;
+    categoryLabel: string;
+    categoryAll: string;
+    makeLabel: string;
+    makeAll: string;
+    yearRangeLabel: string;
+    yearFrom: string;
+    yearTo: string;
+    priceRangeLabel: string;
+    priceMin: string;
+    priceMax: string;
+    resetFilters: string;
+    showing: string;
+    of: string;
+    listings: string;
+    empty: string;
+    emptyHint: string;
+    viewSpecs: string;
+    inquireNow: string;
+    fobPrice: string;
+    year: string;
+    usage: string;
+    engine: string;
+    page: string;
+    prev: string;
+    next: string;
+  };
+  mediaPage: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    tabPhotos: string;
+    tabVideos: string;
+    photosEyebrow: string;
+    photosTitle: string;
+    openInMaps: string;
+    photoAlt: string;
+    videosEyebrow: string;
+    videosTitle: string;
+    filterAll: string;
+    categoryClassic: string;
+    categoryAuctions: string;
+    categoryInspections: string;
+    categorySpecialized: string;
+    subscribeTitle: string;
+    subscribeBody: string;
+    subscribeCta: string;
+    lightboxOf: string;
+    lightboxClose: string;
+    lightboxPrev: string;
+    lightboxNext: string;
+  };
+  aboutPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    callMobile: string;
+    email: string;
+    whatsapp: string;
+    directChat: string;
+    complianceVerified: string;
+    credentialsTitle: string;
+    companyName: string;
+    businessScope: string;
+    representativeDirector: string;
+    dealerLicense: string;
+    address: string;
+    mobile: string;
+    telFax: string;
+    officeTitle: string;
+  };
+  contactPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    formTitle: string;
+    formSubtitle: string;
+    stockQuoteContext: string;
+    stockId: string;
+    vehicleName: string;
+    fobPriceUSD: string;
+    fobPriceJPY: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    countryLabel: string;
+    countryPlaceholder: string;
+    destinationLabel: string;
+    destinationPlaceholder: string;
+    phoneLabel: string;
+    phonePlaceholder: string;
+    messageLabel: string;
+    required: string;
+    submit: string;
+    submitting: string;
+    successFallback: string;
+    errorFallback: string;
+    networkError: string;
+    directContactTitle: string;
+    mobileLabel: string;
+    telFaxLabel: string;
+    emailLabel2: string;
+    whatsappButton: string;
+    emailButton: string;
+    officeTitle: string;
   };
 };
 
@@ -136,9 +259,21 @@ export const dictionaries: Record<Language, Dictionary> = {
     auctions: {
       eyebrow: "ヤフオク出品情報",
       title: "ヤフオク出品情報",
+      description:
+        "日本全国のオークションから、ラビンインターナショナル株式会社が入札代行と輸出手続きをサポートします。",
       viewAll: "オークションをすべて見る",
       cta: "オークションを見る",
       empty: "現在出品中のオークションはありません。",
+      emptyHint: "出品者IDの設定をご確認いただくか、後ほど再度ご確認ください。",
+      openSellerPage: "出品者ページを見る",
+      sellerId: "出品者ID",
+      notConfigured: "未設定",
+      feedNotice: "フィード通知",
+      currentPrice: "現在価格",
+      condition: "状態",
+      validUntil: "有効期限",
+      ended: "終了",
+      auctionEnded: "このオークションは終了しました",
     },
     gallery: {
       eyebrow: "検査・出荷の様子",
@@ -155,6 +290,122 @@ export const dictionaries: Record<Language, Dictionary> = {
       navLabel: "ナビゲーション",
       contactLabel: "お問い合わせ",
       rights: "All rights reserved.",
+    },
+    inventoryPage: {
+      eyebrow: "在庫一覧",
+      title: "輸出可能な車両・重機・部品",
+      description: "カテゴリー・メーカー・年式・価格で絞り込み、詳細をご確認いただけます。",
+      searchLabel: "検索",
+      searchPlaceholder: "例: HiAce, Komatsu, RVN-HM",
+      categoryLabel: "カテゴリー",
+      categoryAll: "すべてのカテゴリー",
+      makeLabel: "メーカー",
+      makeAll: "すべてのメーカー",
+      yearRangeLabel: "年式",
+      yearFrom: "from",
+      yearTo: "to",
+      priceRangeLabel: "価格帯 (USD)",
+      priceMin: "最小",
+      priceMax: "最大",
+      resetFilters: "フィルターをリセット",
+      showing: "表示中",
+      of: "/",
+      listings: "件",
+      empty: "該当する在庫がありません",
+      emptyHint: "年式・価格の条件を広げるか、フィルターをリセットしてください。",
+      viewSpecs: "詳細を見る",
+      inquireNow: "お問い合わせ",
+      fobPrice: "FOB価格",
+      year: "年式",
+      usage: "使用状況",
+      engine: "エンジン",
+      page: "ページ",
+      prev: "前へ",
+      next: "次へ",
+    },
+    mediaPage: {
+      eyebrow: "運用・輸出メディア",
+      title: "検査・ヤード作業と希少車両の記録",
+      description:
+        "実際の検査・ヤード作業の様子をご覧いただけます。ラビンインターナショナル株式会社がどのように車両・機械を検査し、輸出準備を行っているかをご紹介します。",
+      tabPhotos: "写真",
+      tabVideos: "動画",
+      photosEyebrow: "写真",
+      photosTitle: "検査・出荷の記録",
+      openInMaps: "Google マップで開く",
+      photoAlt: "検査・輸出作業の様子",
+      videosEyebrow: "動画",
+      videosTitle: "運用動画アーカイブ",
+      filterAll: "すべて",
+      categoryClassic: "クラシックカー",
+      categoryAuctions: "特選オークション",
+      categoryInspections: "車両検査",
+      categorySpecialized: "特殊車両",
+      subscribeTitle: "公式チャンネルでヤードの最新情報をチェック",
+      subscribeBody:
+        "新着在庫や希少なオークション車両の入荷情報を、いち早く動画でお届けします。",
+      subscribeCta: "@Jdmpqa2994 をYouTubeで見る",
+      lightboxOf: "/",
+      lightboxClose: "閉じる",
+      lightboxPrev: "前の写真",
+      lightboxNext: "次の写真",
+    },
+    aboutPage: {
+      eyebrow: "会社概要",
+      title: "信頼と実績のある日本の輸出業者",
+      subtitle:
+        "神奈川県を拠点に、正規ライセンスを取得したラビンインターナショナル株式会社が、確かな輸出サービスをご提供します。",
+      callMobile: "電話",
+      email: "メール",
+      whatsapp: "WhatsApp",
+      directChat: "直接チャット",
+      complianceVerified: "認証済み事業者",
+      credentialsTitle: "会社情報・許可情報",
+      companyName: "会社名",
+      businessScope: "事業内容",
+      representativeDirector: "代表取締役",
+      dealerLicense: "古物商許可",
+      address: "所在地",
+      mobile: "携帯電話",
+      telFax: "TEL / FAX",
+      officeTitle: "神奈川オフィス",
+    },
+    contactPage: {
+      eyebrow: "お問い合わせ窓口",
+      title: "お見積もり・輸送のご相談",
+      subtitle:
+        "車両・重機・機械・部品に関するお問い合わせをお送りください。輸出可能状況、仕向港までの見積り、お支払い方法についてご案内いたします。",
+      formTitle: "お問い合わせを送る",
+      formSubtitle: "ご連絡先と仕向地をご入力ください。通常1営業日以内にご返信いたします。",
+      stockQuoteContext: "在庫お見積り情報",
+      stockId: "在庫ID",
+      vehicleName: "車両名",
+      fobPriceUSD: "FOB価格 (USD)",
+      fobPriceJPY: "FOB価格 (JPY)",
+      nameLabel: "お名前",
+      namePlaceholder: "山田 太郎",
+      emailLabel: "メールアドレス",
+      emailPlaceholder: "you@example.com",
+      countryLabel: "国",
+      countryPlaceholder: "例: ケニア",
+      destinationLabel: "仕向港",
+      destinationPlaceholder: "例: モンバサ",
+      phoneLabel: "電話番号",
+      phonePlaceholder: "+254 ...",
+      messageLabel: "メッセージ",
+      required: "必須",
+      submit: "送信する",
+      submitting: "送信中...",
+      successFallback: "お問い合わせを受け付けました。担当者よりご連絡いたします。",
+      errorFallback: "送信できませんでした。WhatsAppまたはメールでご連絡ください。",
+      networkError: "通信エラーが発生しました。もう一度お試しください。",
+      directContactTitle: "直接お問い合わせ",
+      mobileLabel: "携帯電話",
+      telFaxLabel: "TEL / FAX",
+      emailLabel2: "メール",
+      whatsappButton: "WhatsApp",
+      emailButton: "メールを送る",
+      officeTitle: "神奈川オフィス",
     },
   },
   en: {
@@ -231,9 +482,21 @@ export const dictionaries: Record<Language, Dictionary> = {
     auctions: {
       eyebrow: "Yahoo Auctions Listings",
       title: "Yahoo Auctions Listings",
+      description:
+        "Live listings from auctions across Japan — ラビンインターナショナル株式会社 handles bidding support and export logistics.",
       viewAll: "View All Auctions",
       cta: "View Auction",
       empty: "No active auction listings right now.",
+      emptyHint: "Check the seller ID configuration, or check back later.",
+      openSellerPage: "Open Seller Page",
+      sellerId: "Seller ID",
+      notConfigured: "Not configured",
+      feedNotice: "Feed notice",
+      currentPrice: "Current",
+      condition: "Condition",
+      validUntil: "Valid Until",
+      ended: "Ended",
+      auctionEnded: "This auction has ended",
     },
     gallery: {
       eyebrow: "Inspection & Shipping",
@@ -250,6 +513,122 @@ export const dictionaries: Record<Language, Dictionary> = {
       navLabel: "Navigation",
       contactLabel: "Contact",
       rights: "All rights reserved.",
+    },
+    inventoryPage: {
+      eyebrow: "Live Export Catalog",
+      title: "Verified Vehicles, Heavy Machinery & Parts",
+      description: "Filter by category, make, year, and price, then open a listing for full specs.",
+      searchLabel: "Search",
+      searchPlaceholder: "e.g. HiAce, Komatsu, RVN-HM",
+      categoryLabel: "Category",
+      categoryAll: "All Categories",
+      makeLabel: "Make",
+      makeAll: "All Makes",
+      yearRangeLabel: "Year Range",
+      yearFrom: "From",
+      yearTo: "To",
+      priceRangeLabel: "Price Range (USD)",
+      priceMin: "Min",
+      priceMax: "Max",
+      resetFilters: "Reset Filters",
+      showing: "Showing",
+      of: "of",
+      listings: "listings",
+      empty: "No Matching Stock",
+      emptyHint: "Try broadening year or price range, or reset filters.",
+      viewSpecs: "View Specs",
+      inquireNow: "Inquire Now",
+      fobPrice: "FOB Price",
+      year: "Year",
+      usage: "Usage",
+      engine: "Engine",
+      page: "Page",
+      prev: "Prev",
+      next: "Next",
+    },
+    mediaPage: {
+      eyebrow: "Operations & Export Media",
+      title: "Documented Inspections, Yard Work & Rare Finds",
+      description:
+        "A real look at our inspection and yard operations — see how ラビンインターナショナル株式会社 inspects and prepares vehicles and machinery for export.",
+      tabPhotos: "Photos",
+      tabVideos: "Videos",
+      photosEyebrow: "Photos",
+      photosTitle: "Inspection & Shipping Archive",
+      openInMaps: "Open In Google Maps",
+      photoAlt: "Inspection and export operations photo",
+      videosEyebrow: "Videos",
+      videosTitle: "Operational Video Archive",
+      filterAll: "All",
+      categoryClassic: "Classic Vehicles",
+      categoryAuctions: "Special Auctions",
+      categoryInspections: "Vehicle Inspections",
+      categorySpecialized: "Specialized Units",
+      subscribeTitle: "Subscribe to Our Official Channel for Real-Time Yard Updates",
+      subscribeBody:
+        "Get immediate video notifications whenever we receive new stock or inspect rare auction arrivals.",
+      subscribeCta: "Visit @Jdmpqa2994 on YouTube",
+      lightboxOf: "of",
+      lightboxClose: "Close",
+      lightboxPrev: "Previous photo",
+      lightboxNext: "Next photo",
+    },
+    aboutPage: {
+      eyebrow: "About Our Company",
+      title: "Proven Integrity in Japanese Export",
+      subtitle:
+        "Operating from Kanagawa, Japan, ラビンインターナショナル株式会社 is a licensed dealer providing reliable global export services.",
+      callMobile: "Call Mobile",
+      email: "Email",
+      whatsapp: "WhatsApp",
+      directChat: "Direct chat",
+      complianceVerified: "Compliance Verified",
+      credentialsTitle: "Company Credentials",
+      companyName: "Company Name",
+      businessScope: "Business Scope",
+      representativeDirector: "Representative Director",
+      dealerLicense: "Dealer License",
+      address: "Address",
+      mobile: "Mobile",
+      telFax: "TEL / FAX",
+      officeTitle: "Kanagawa Office",
+    },
+    contactPage: {
+      eyebrow: "Contact & Inquiry Desk",
+      title: "Request A Quote Or Shipping Consultation",
+      subtitle:
+        "Submit your inquiry for vehicles, machinery, equipment, or parts. Our export team will respond with availability, destination port estimate, and payment process details.",
+      formTitle: "Send Inquiry",
+      formSubtitle: "Fill in your details and destination information. We usually reply within one business day.",
+      stockQuoteContext: "Stock Quote Context",
+      stockId: "Stock ID",
+      vehicleName: "Vehicle Name",
+      fobPriceUSD: "FOB Price (USD)",
+      fobPriceJPY: "FOB Price (JPY)",
+      nameLabel: "Customer Name",
+      namePlaceholder: "Your full name",
+      emailLabel: "Email",
+      emailPlaceholder: "you@example.com",
+      countryLabel: "Country",
+      countryPlaceholder: "e.g. Kenya",
+      destinationLabel: "Target Destination Port",
+      destinationPlaceholder: "e.g. Mombasa",
+      phoneLabel: "Phone Number",
+      phonePlaceholder: "+254 ...",
+      messageLabel: "Message",
+      required: "Required",
+      submit: "Send Inquiry",
+      submitting: "Sending...",
+      successFallback: "Inquiry sent successfully. Our team will contact you soon.",
+      errorFallback: "Unable to send inquiry right now. Please try WhatsApp or email.",
+      networkError: "Network issue while submitting inquiry. Please try again.",
+      directContactTitle: "Direct Contact",
+      mobileLabel: "Mobile",
+      telFaxLabel: "TEL / FAX",
+      emailLabel2: "Email",
+      whatsappButton: "WhatsApp",
+      emailButton: "Email Us",
+      officeTitle: "Kanagawa Office",
     },
   },
 };

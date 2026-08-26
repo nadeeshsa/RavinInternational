@@ -4,33 +4,16 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { Calculator, CircleX, Ship } from "lucide-react";
 import type { InventoryCurrency, InventoryItem } from "@/types/inventory";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const jpyRate = 155;
 
 const shippingRoutes = [
   { code: "durban", route: "Yokohama -> Durban", freightUSD: 1900, docsUSD: 420, eta: "26-31 days" },
-  {
-    code: "mombasa",
-    route: "Yokohama -> Mombasa",
-    freightUSD: 2100,
-    docsUSD: 420,
-    eta: "28-34 days",
-  },
-  {
-    code: "dar",
-    route: "Yokohama -> Dar es Salaam",
-    freightUSD: 2200,
-    docsUSD: 450,
-    eta: "31-37 days",
-  },
+  { code: "mombasa", route: "Yokohama -> Mombasa", freightUSD: 2100, docsUSD: 420, eta: "28-34 days" },
+  { code: "dar", route: "Yokohama -> Dar es Salaam", freightUSD: 2200, docsUSD: 450, eta: "31-37 days" },
   { code: "dubai", route: "Yokohama -> Jebel Ali", freightUSD: 1550, docsUSD: 380, eta: "18-24 days" },
-  {
-    code: "auckland",
-    route: "Yokohama -> Auckland",
-    freightUSD: 2400,
-    docsUSD: 460,
-    eta: "19-25 days",
-  },
+  { code: "auckland", route: "Yokohama -> Auckland", freightUSD: 2400, docsUSD: 460, eta: "19-25 days" },
 ];
 
 type StockDetailModalProps = {
@@ -40,24 +23,17 @@ type StockDetailModalProps = {
   onInquire: (item: InventoryItem) => void;
 };
 
-export function StockDetailModal({
-  item,
-  currency,
-  onClose,
-  onInquire,
-}: StockDetailModalProps) {
+export function StockDetailModal({ item, currency, onClose, onInquire }: StockDetailModalProps) {
+  const { t } = useLanguage();
+  const i = t.inventoryPage;
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
   const [routeCode, setRouteCode] = useState<string>(shippingRoutes[0].code);
 
   useEffect(() => {
-    if (!item) {
-      return;
-    }
+    if (!item) return;
 
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
+      if (event.key === "Escape") onClose();
     };
 
     document.addEventListener("keydown", handleEscape);
@@ -75,10 +51,9 @@ export function StockDetailModal({
     [routeCode],
   );
 
-  if (!item) {
-    return null;
-  }
+  if (!item) return null;
 
+  const title = item.title.trim();
   const activeImage =
     item.images[activeImageIndex] ??
     item.images[0] ??
@@ -90,32 +65,27 @@ export function StockDetailModal({
 
   const priceText =
     currency === "USD"
-      ? new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-          maximumFractionDigits: 0,
-        }).format(fobUSD)
-      : new Intl.NumberFormat("ja-JP", {
-          style: "currency",
-          currency: "JPY",
-          maximumFractionDigits: 0,
-        }).format(item.fobPriceJPY);
+      ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(fobUSD)
+      : new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 }).format(item.fobPriceJPY);
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/35 px-4 py-8 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 backdrop-blur-sm"
+      style={{ background: "rgba(15, 15, 13, 0.45)" }}
       role="dialog"
       aria-modal="true"
       onClick={onClose}
     >
       <div
-        className="relative max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-3xl border border-slate-200 bg-white p-6 shadow-xl sm:p-8"
+        className="relative max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-3xl p-6 sm:p-8"
+        style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", boxShadow: "var(--rd-shadow-md)" }}
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full border border-slate-300 bg-white p-2 text-slate-600 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+          className="absolute right-4 top-4 rounded-full p-2 transition"
+          style={{ border: "1px solid var(--border-strong)", background: "var(--bg-elevated)", color: "var(--fg-muted)" }}
           aria-label="Close stock details"
         >
           <CircleX className="h-5 w-5" />
@@ -125,11 +95,12 @@ export function StockDetailModal({
           <div>
             <Image
               src={activeImage}
-              alt={item.title}
+              alt={title}
               width={1400}
               height={900}
               sizes="(max-width: 1024px) 100vw, 60vw"
-              className="h-72 w-full rounded-2xl border border-slate-200 object-cover"
+              className="h-72 w-full rounded-2xl object-cover"
+              style={{ border: "1px solid var(--border)" }}
             />
 
             <div className="mt-3 grid grid-cols-3 gap-2">
@@ -138,73 +109,65 @@ export function StockDetailModal({
                   key={image}
                   type="button"
                   onClick={() => setActiveImageIndex(index)}
-                  className={`overflow-hidden rounded-xl border transition ${
-                    activeImageIndex === index
-                      ? "border-blue-500"
-                      : "border-slate-200 hover:border-blue-300"
-                  }`}
+                  className="overflow-hidden rounded-xl border transition"
+                  style={{ borderColor: activeImageIndex === index ? "var(--accent)" : "var(--border)" }}
                 >
-                  <Image
-                    src={image}
-                    alt={`${item.title} preview`}
-                    width={360}
-                    height={220}
-                    sizes="120px"
-                    className="h-20 w-full object-cover"
-                  />
+                  <Image src={image} alt={`${title} preview`} width={360} height={220} sizes="120px" className="h-20 w-full object-cover" />
                 </button>
               ))}
             </div>
           </div>
 
           <div>
-            <p className="text-xs font-semibold tracking-[0.14em] text-blue-700">
-              STOCK ID: {item.stockId}
+            <p className="text-xs font-semibold tracking-[0.14em]" style={{ color: "var(--accent)" }}>
+              {item.stockId}
             </p>
-            <h3 className="font-industrial mt-2 text-3xl text-slate-900">{item.title}</h3>
-            <p className="mt-1 text-sm text-slate-600">
-              {item.make} {item.model} | {item.category}
+            <h3 className="mt-2 text-3xl font-bold" style={{ color: "var(--fg)" }}>
+              {title}
+            </h3>
+            <p className="mt-1 text-sm" style={{ color: "var(--fg-muted)" }}>
+              {item.make} {item.model} · {item.category}
             </p>
 
-            <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <p className="text-xs tracking-[0.12em] text-slate-500">FOB PRICE</p>
-              <p className="font-industrial mt-1 text-3xl text-slate-900">{priceText}</p>
+            <div className="mt-5 rounded-2xl p-4" style={{ background: "var(--bg-muted)", border: "1px solid var(--border)" }}>
+              <p className="text-xs tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
+                {i.fobPrice.toUpperCase()}
+              </p>
+              <p className="mt-1 text-3xl font-bold" style={{ color: "var(--fg)" }}>
+                {priceText}
+              </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() => onInquire(item)}
-              className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
-            >
-              Inquire Now
+            <button type="button" onClick={() => onInquire(item)} className="btn-rd-primary mt-4 w-full">
+              {i.inquireNow}
             </button>
 
             <dl className="mt-5 space-y-3 text-sm">
-              <SpecRow label="Status" value={item.status} />
-              <SpecRow label="Year" value={String(item.year)} />
-              <SpecRow label="Engine" value={item.engineSize} />
-              <SpecRow label="Mileage / Hours" value={item.mileageOrHours} />
-              <SpecRow label="Make / Model" value={`${item.make} ${item.model}`} />
-              <SpecRow label="Category" value={item.category} />
+              <SpecRow label={i.year} value={String(item.year)} />
+              <SpecRow label={i.engine} value={item.engineSize} />
+              <SpecRow label={i.usage} value={item.mileageOrHours} />
+              <SpecRow label={i.makeLabel} value={`${item.make} ${item.model}`} />
+              <SpecRow label={i.categoryLabel} value={item.category} />
             </dl>
           </div>
         </div>
 
-        <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
-          <h4 className="font-industrial flex items-center gap-2 text-2xl text-slate-900">
-            <Calculator className="h-5 w-5 text-blue-600" />
+        <div className="mt-8 rounded-2xl p-5" style={{ background: "var(--bg-muted)", border: "1px solid var(--border)" }}>
+          <h4 className="flex items-center gap-2 text-xl font-bold" style={{ color: "var(--fg)" }}>
+            <Calculator className="h-5 w-5" style={{ color: "var(--accent)" }} />
             Shipping Port Estimate Calculator
           </h4>
 
           <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
             <label className="block">
-              <span className="mb-2 block text-xs font-semibold tracking-[0.12em] text-slate-600">
+              <span className="mb-2 block text-xs font-semibold tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
                 Destination Route
               </span>
               <select
                 value={routeCode}
                 onChange={(event) => setRouteCode(event.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-blue-400"
+                className="w-full rounded-xl px-4 py-3 text-sm outline-none"
+                style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--fg)" }}
               >
                 {shippingRoutes.map((route) => (
                   <option key={route.code} value={route.code}>
@@ -214,23 +177,22 @@ export function StockDetailModal({
               </select>
             </label>
 
-            <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">
+            <div className="rounded-xl px-4 py-3 text-sm" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--fg-muted)" }}>
               <p className="inline-flex items-center gap-2">
-                <Ship className="h-4 w-4 text-blue-600" />
+                <Ship className="h-4 w-4" style={{ color: "var(--accent)" }} />
                 Estimated Transit: {selectedRoute.eta}
               </p>
             </div>
           </div>
 
-          <div className="mt-5 grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
+          <div className="mt-5 grid gap-2 text-sm sm:grid-cols-2">
             <CostRow label="FOB Price (USD)" value={formatUSD(fobUSD)} />
             <CostRow label="Ocean Freight" value={formatUSD(selectedRoute.freightUSD)} />
             <CostRow label="Documentation + Handling" value={formatUSD(selectedRoute.docsUSD)} />
             <CostRow label="Estimated Landed Total" value={formatUSD(totalUSD)} highlight />
             <CostRow label="Estimated Landed Total (JPY)" value={formatJPY(totalJPY)} highlight />
-            <p className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-500">
-              Estimates are indicative and can vary by destination port charges,
-              customs, and local taxes.
+            <p className="rounded-xl px-3 py-2 text-xs" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--fg-subtle)" }}>
+              Estimates are indicative and can vary by destination port charges, customs, and local taxes.
             </p>
           </div>
         </div>
@@ -239,53 +201,38 @@ export function StockDetailModal({
   );
 }
 
-type SpecRowProps = {
-  label: string;
-  value: string;
-};
-
-function SpecRow({ label, value }: SpecRowProps) {
+function SpecRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="grid grid-cols-[135px_1fr] gap-3 border-b border-slate-200 pb-2">
-      <dt className="text-slate-500">{label}</dt>
-      <dd className="text-slate-700">{value}</dd>
+    <div className="grid grid-cols-[135px_1fr] gap-3 pb-2" style={{ borderBottom: "1px solid var(--border)" }}>
+      <dt style={{ color: "var(--fg-subtle)" }}>{label}</dt>
+      <dd style={{ color: "var(--fg-muted)" }}>{value}</dd>
     </div>
   );
 }
 
-type CostRowProps = {
-  label: string;
-  value: string;
-  highlight?: boolean;
-};
-
-function CostRow({ label, value, highlight = false }: CostRowProps) {
+function CostRow({ label, value, highlight = false }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div
-      className={`rounded-xl border px-3 py-2 ${
-        highlight
-          ? "border-blue-200 bg-blue-50"
-          : "border-slate-200 bg-white"
-      }`}
+      className="rounded-xl px-3 py-2"
+      style={{
+        border: `1px solid ${highlight ? "var(--accent)" : "var(--border)"}`,
+        background: highlight ? "var(--bg-elevated)" : "var(--bg-elevated)",
+      }}
     >
-      <p className="text-xs tracking-[0.11em] text-slate-500">{label}</p>
-      <p className="font-semibold text-slate-800">{value}</p>
+      <p className="text-xs tracking-[0.1em]" style={{ color: "var(--fg-subtle)" }}>
+        {label}
+      </p>
+      <p className="font-semibold" style={{ color: "var(--fg)" }}>
+        {value}
+      </p>
     </div>
   );
 }
 
 function formatUSD(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(value);
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
 }
 
 function formatJPY(value: number) {
-  return new Intl.NumberFormat("ja-JP", {
-    style: "currency",
-    currency: "JPY",
-    maximumFractionDigits: 0,
-  }).format(value);
+  return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 }).format(value);
 }
