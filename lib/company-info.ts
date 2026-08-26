@@ -21,6 +21,7 @@ export type CompanyInfo = {
   telFaxCallLink: string;
   emailLink: string;
   whatsappLink: string;
+  whatsappDisplay: string;
   googleMapsEmbedUrl: string;
   placeGalleryImages: string[];
 };
@@ -51,6 +52,7 @@ export const companyInfo: CompanyInfo = {
   telFaxCallLink: "tel:0462104308",
   emailLink: "mailto:rvinint.jp@gmail.com",
   whatsappLink: "https://wa.me/818043873344",
+  whatsappDisplay: "+81-80-4387-3344",
   googleMapsEmbedUrl:
     "https://maps.google.com/maps?q=%E3%83%A9%E3%83%93%E3%83%B3%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%8A%E3%82%B7%E3%83%A7%E3%83%8A%E3%83%AB%E6%A0%AA%E5%BC%8F%E4%BC%9A%E7%A4%BE,%20286-1%20%E4%B8%89%E5%A2%9E,%20Aikawa,%20Aiko%20District,%20Kanagawa%20243-0308&z=17&output=embed",
   placeGalleryImages: [

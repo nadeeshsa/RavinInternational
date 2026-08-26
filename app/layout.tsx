@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Sans_JP, Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { companyInfo } from "@/lib/company-info";
+import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
 
 const inter = Inter({
   variable: "--font-jakarta",
@@ -29,19 +30,29 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf9f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#161512" },
+  ],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="en"
+      lang="ja"
       className={`${inter.variable} ${bilingual.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full bg-[var(--color-site-bg)] text-[var(--color-site-text)]">
-        <div className="flex min-h-full flex-col">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <WhatsAppFab />
-        </div>
+      <body className="min-h-full" style={{ background: "var(--bg)", color: "var(--fg)" }}>
+        <LanguageProvider>
+          <div className="flex min-h-full flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <WhatsAppFab />
+          </div>
+        </LanguageProvider>
       </body>
     </html>
   );

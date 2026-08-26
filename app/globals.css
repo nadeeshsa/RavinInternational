@@ -30,10 +30,74 @@
   --btn-secondary-text: var(--color-site-text);
 }
 
+/* ---------------------------------------------------------------------
+   Redesign token system (2026) — neutral corporate-minimal, deep teal
+   accent. Additive: the legacy --color-site-* tokens above are untouched
+   so /admin and any not-yet-redesigned page keep their current look.
+   Light/dark is OS-driven only via prefers-color-scheme — no manual
+   toggle, no [data-theme] override, per the redesign brief.
+   --------------------------------------------------------------------- */
+:root {
+  --bg: #faf9f5;
+  --bg-elevated: #ffffff;
+  --bg-muted: #f1efe9;
+  --fg: #1b1a17;
+  --fg-muted: #57544c;
+  --fg-subtle: #8c897d;
+  --border: #e6e3da;
+  --border-strong: #cbc7b9;
+  --accent: #0f766e;
+  --accent-fg: #ffffff;
+  --accent-hover: #0b5c55;
+  --focus-ring: #0f766e;
+  --danger: #dc2626;
+  --success: #15803d;
+  --rd-radius-sm: 8px;
+  --rd-radius-md: 14px;
+  --rd-radius-lg: 22px;
+  --rd-shadow-sm: 0 1px 2px rgba(27, 26, 23, 0.06), 0 1px 1px rgba(27, 26, 23, 0.04);
+  --rd-shadow-md: 0 8px 24px rgba(27, 26, 23, 0.08), 0 2px 6px rgba(27, 26, 23, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161512;
+    --bg-elevated: #201f1b;
+    --bg-muted: #1b1a16;
+    --fg: #f3f1ea;
+    --fg-muted: #b7b3a6;
+    --fg-subtle: #7e7a6d;
+    --border: #322f28;
+    --border-strong: #47433a;
+    --accent: #2dd4bf;
+    --accent-fg: #08302b;
+    --accent-hover: #5eead4;
+    --focus-ring: #2dd4bf;
+    --danger: #f87171;
+    --success: #4ade80;
+    --rd-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 1px rgba(0, 0, 0, 0.3);
+    --rd-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+}
+
 @theme inline {
   --color-background: var(--color-site-bg);
   --color-foreground: var(--color-site-text);
   --font-sans: var(--font-jakarta);
+
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-muted: var(--bg-muted);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-hover: var(--accent-hover);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
 }
 
 body {
@@ -79,3 +143,41 @@ h3,
   transition:background .12s ease, border-color .12s ease;
 }
 .btn-secondary:hover{background:var(--color-site-bg-soft);border-color:var(--color-site-accent)}
+
+/* Redesigned-page buttons — new token system, kept separate from
+   .btn-primary/.btn-secondary above so the legacy pages and /admin
+   are unaffected until they're redesigned in turn. */
+.btn-rd-primary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.5rem;
+  padding:0.75rem 1.5rem;
+  font-weight:600;
+  font-size:0.95rem;
+  color:var(--accent-fg);
+  background:var(--accent);
+  border-radius:var(--rd-radius-md);
+  transition:background .15s ease, transform .08s ease;
+}
+.btn-rd-primary:hover{background:var(--accent-hover)}
+.btn-rd-primary:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+.btn-rd-secondary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.5rem;
+  padding:0.75rem 1.5rem;
+  font-weight:600;
+  font-size:0.95rem;
+  color:var(--fg);
+  background:transparent;
+  border:1px solid var(--border-strong);
+  border-radius:var(--rd-radius-md);
+  transition:background .12s ease, border-color .12s ease;
+}
+.btn-rd-secondary:hover{background:var(--bg-muted);border-color:var(--accent)}
+.btn-rd-secondary:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+.rd-balance{text-wrap:balance}
