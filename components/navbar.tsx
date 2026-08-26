@@ -3,120 +3,134 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Search } from "lucide-react";
-import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import profileLogo from "@/logo/profile.png";
 import { companyInfo } from "@/lib/company-info";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
 type NavLink = {
   href: string;
   label: string;
 };
 
-const navLinks: NavLink[] = [
-  { href: "/", label: "Home" },
-  { href: "/inventory", label: "Inventory" },
-  { href: "/yahoo-auctions", label: "Auctions" },
-  { href: "/media", label: "Gallery" },
-  { href: "/about", label: "About Us" },
-];
-
 export function Navbar() {
   const pathname = usePathname();
+  const { t, language } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 12);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  const navLinks: NavLink[] = [
+    { href: "/", label: t.nav.home },
+    { href: "/inventory", label: t.nav.inventory },
+    { href: "/yahoo-auctions", label: t.nav.auctions },
+    { href: "/media", label: t.nav.gallery },
+    { href: "/about", label: t.nav.about },
+  ];
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-white/90 shadow-[0_8px_28px_-24px_rgba(5,44,72,0.65)] backdrop-blur-xl" style={{ borderColor: "var(--color-site-line)" }}>
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-3 py-3">
-          <Link href="/" className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3 lg:gap-4">
-            <Image
-              src={profileLogo}
-              alt="ラビンインターナショナル株式会社 logo"
-              className="h-10 w-auto shrink-0 object-contain sm:h-14 lg:h-16"
-              priority
-            />
-            <span className="flex min-w-0 flex-col">
-              <span className="font-industrial break-words text-sm font-bold leading-snug tracking-wide text-[var(--color-site-text)] sm:text-lg lg:text-2xl">
-                {companyInfo.shortDisplayName}
-              </span>
-              <span className="hidden break-words text-xs text-[var(--color-site-subtext)] sm:block sm:text-sm">
-                {companyInfo.businessScopeJapanese}
-              </span>
-            </span>
-          </Link>
+    <header
+      className="sticky top-0 z-40 transition-shadow"
+      style={{
+        background: "var(--bg)",
+        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+        boxShadow: scrolled ? "var(--rd-shadow-sm)" : "none",
+      }}
+    >
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+        <Link href="/" className="flex min-w-0 items-center gap-3">
+          <Image
+            src={profileLogo}
+            alt="ラビンインターナショナル株式会社"
+            className="h-10 w-auto shrink-0 object-contain sm:h-12"
+            priority
+          />
+          <span
+            className="hidden text-sm font-bold tracking-wide sm:block"
+            style={{ color: "var(--fg)" }}
+          >
+            {language === "ja" ? companyInfo.companyNameJapanese : companyInfo.companyNameEnglish}
+          </span>
+        </Link>
 
-          <div className="flex shrink-0 items-center gap-3">
-            <Link href="/contact" className="hidden lg:inline-flex btn-secondary">
-              Contact
-            </Link>
-            <div className="relative hidden w-44 lg:block">
-              <input
-                placeholder="Site Search"
-                aria-label="Site search"
-                className="w-full rounded border border-transparent bg-slate-50 px-3 py-1 text-sm outline-none focus:border-slate-200"
-              />
-              <Search className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-site-subtext)]" />
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setMenuOpen((prev) => !prev)}
-              aria-expanded={menuOpen}
-              aria-label="Toggle navigation menu"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-transparent bg-white text-[var(--color-site-subtext)] shadow-sm sm:h-11 sm:w-11 lg:hidden"
-            >
-              {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
-          </div>
-        </div>
-
-        <nav className="hidden border-t pb-3 pt-7 lg:flex lg:items-center lg:gap-3" style={{ borderColor: "var(--color-site-line)" }}>
+        <nav className="hidden items-center gap-1 lg:flex">
           {navLinks.map((link) => {
             const active = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                  active
-                    ? "text-white"
-                    : "text-[var(--color-site-subtext)] hover:text-[var(--color-site-text)]"
-                }`}
-                style={active ? { backgroundColor: "var(--color-site-accent)" } : undefined}
+                className="whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition"
+                style={{
+                  color: active ? "var(--accent-fg)" : "var(--fg-muted)",
+                  background: active ? "var(--accent)" : "transparent",
+                }}
               >
                 {link.label}
               </Link>
             );
           })}
         </nav>
+
+        <div className="flex shrink-0 items-center gap-3">
+          <LanguageToggle className="hidden sm:inline-flex" />
+          <Link href="/contact" className="btn-rd-secondary hidden lg:inline-flex">
+            {t.nav.contact}
+          </Link>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-expanded={menuOpen}
+            aria-label="Toggle navigation menu"
+            className="flex h-10 w-10 items-center justify-center rounded-lg lg:hidden"
+            style={{ color: "var(--fg)" }}
+          >
+            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {menuOpen ? (
-        <div className="border-t bg-white px-4 py-4 lg:hidden" style={{ borderColor: "var(--color-site-line)" }}>
-          <nav className="mx-auto flex w-full max-w-7xl flex-col gap-2">
+        <div
+          className="fixed inset-x-0 top-[57px] bottom-0 z-30 overflow-y-auto lg:hidden"
+          style={{ background: "var(--bg)" }}
+        >
+          <nav className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-6">
             {navLinks.map((link) => {
               const active = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className={`whitespace-nowrap rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
-                    active
-                      ? "text-white"
-                      : "text-[var(--color-site-text)] hover:text-[var(--color-site-text)]"
-                  }`}
-                  style={active ? { backgroundColor: "var(--color-site-accent)" } : undefined}
+                  className="rounded-xl px-4 py-3 text-base font-semibold"
+                  style={{
+                    color: active ? "var(--accent-fg)" : "var(--fg)",
+                    background: active ? "var(--accent)" : "transparent",
+                  }}
                 >
                   {link.label}
                 </Link>
               );
             })}
-            <div className="mt-2">
-              <Link href="/contact" onClick={() => setMenuOpen(false)} className="btn-secondary justify-center">
-                Contact
-              </Link>
+            <Link href="/contact" className="btn-rd-primary mt-2 justify-center">
+              {t.nav.contact}
+            </Link>
+            <div className="mt-4 flex justify-center">
+              <LanguageToggle />
             </div>
           </nav>
         </div>
@@ -124,5 +138,3 @@ export function Navbar() {
     </header>
   );
 }
-
-// language toggle removed — restored simpler header layout
